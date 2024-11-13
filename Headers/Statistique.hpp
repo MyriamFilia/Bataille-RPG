@@ -6,7 +6,7 @@ class Statistique {
         Statistique();
         Statistique(int force, int intelligence, int agilite, int chance);
         void afficherStatistique();
-        void calculerDegats();
+        void calculerDegats(); // utilise la force , intelligence , agilité , chance pour calculer retourne un int ou float 
 
     private:
         int force;
