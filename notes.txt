@@ -1,0 +1,77 @@
+	- Personnage --> Attributs : Protected
+				- Id : int
+				- Nom : string
+				- Points de vie : int
+				- Force : int
+				- Mana : int
+				- Expérience : int 
+				- Intelligence : int ????
+				- Niveau : int
+				- Tableau d'objets ( ??? )
+				
+			
+			--> Méthodes : Public
+				- Constructeur
+				- Getters and setters
+				- afficherPersonnage() : void
+				- Attaquer (Personnage &ennemi);
+				- Défendre ( )
+				- Utiliser capacité ( )
+				- Gagner expérience ( ) 
+			
+		- Mage hérite de Personnage ---> Attributs : 
+								
+							--> Méthodes: 
+		
+		- Archer hérite de Personnage --> Attributs :
+							
+							--> Méthodes: 
+								
+		
+		- Guerrier hérite de Personnage --> Attributs : 
+		
+							--> Méthodes: 
+							
+		
+		- Ogre hérite de Personnage --> Attributs : 
+
+							--> Méthodes: 
+							
+		
+			
+			
+			
+	- Objet ( Armes , Skin ??? , Potion , … ) --> Attributs ( peut être de l'héritage ? )
+								– Nom : string
+								– Description : string
+								– Effet  : int
+							--> Méthodes
+								- afficherObjet () : void 
+								
+		Arme hérite de Objet : Attributs : 
+						    Méthodes : - attaquer() 
+									- 
+				
+		Potion hérite de Objet : Attributs : 
+						      Méthodes : - gagnerDesPV()
+								
+								
+		Skin hérite de Objet : Attributs : 
+						      Méthodes : - stabiliserPV ()
+		
+
+	- Inventaire :  ----> Attributs : Tableau d'objets : Objet
+				---> Méthodes : afficherObjets() ; ajouterObjet () ; retirerObjet() ; utiliserObjet() ;
+
+
+
+
+Trame du jeu : 
+	- Menu choisir Type de jeu : Demande à l'utilisateur quel option il veut jouer : 
+		1- 1 VS 1
+		2- Tournoi
+	( Possibilité de rejouer ou pas )
+	
+	- Tour d'attaque 1 : random 
+
+Menu choisir type de personnage : Guerrier , Archer , Mage , Ogre
