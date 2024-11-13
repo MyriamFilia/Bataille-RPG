@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Inventaire.hpp"
 #include "Capacite.hpp"
+#include "Statistique.hpp"
+
 using namespace std;
 
 class Personnage
@@ -13,20 +15,21 @@ class Personnage
 protected:
     string nom;
     int pointDeVie;
-    int mana;
+    /*int mana; //points de mana mais ici ?*/
     int experience;
     int niveau;
+    Statistique statistique;
     Inventaire inventaire;
 
 public:
     Personnage();
-    Personnage(string nom, int pointDeVie, int mana, int experience, int niveau);
+    Personnage(string nom, int pointDeVie, int experience, int niveau);
     void afficherPersonnage();
     void attaquer(Personnage &cible);
     void recevoirDegats(int degats);
     void gagnerExperience(int experience);
     void monterNiveau();
-    void utiliserCapacite(Capacite capacite);
+    void utiliserCapacite(Capacite* capacite);
 };
 
 #endif // PERSONNAGE_HPP
