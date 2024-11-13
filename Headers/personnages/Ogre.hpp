@@ -6,7 +6,6 @@
 class Ogre : public Personnage {
 public:
     Ogre();
-
    
 };
 
