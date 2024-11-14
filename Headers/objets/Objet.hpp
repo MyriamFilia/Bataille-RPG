@@ -15,7 +15,8 @@ class Objet {
     public:
         Objet();
         Objet(string nom, string description, int effet);
-        void utiliser();
+        void utiliser();  /* utiliser dans le sens afficher sa description, son nom, son effet ?/*
+
 };
 
 #endif // OBJET_HPP
