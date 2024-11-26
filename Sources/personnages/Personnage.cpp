@@ -88,6 +88,14 @@ int Personnage::getMana() {
     return mana;
 }
 
+// Afficher la liste des capacités
+void Personnage::listeCapacites() {
+    cout << "Capacités de " << nom << " : " << endl;
+    for (size_t i = 0; i < capacites.size(); ++i) {
+        cout << i + 1 << ". " << capacites[i].getNom() << endl;
+    }
+}
+
 // Ajouter une capacité
 void Personnage::ajouterCapacite(const Capacite &capacite) {
     capacites.push_back(capacite);
