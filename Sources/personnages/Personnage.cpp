@@ -1,4 +1,7 @@
-#include "Personnage.hpp"
+#include "../Headers/Statistique.hpp"
+#include "../Headers/Inventaire.hpp"
+#include "../Headers/Capacite.hpp"
+#include "../Headers/personnages/Personnage.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,6 +11,16 @@ using namespace std;
 
 
 // Constructeur
+Personnage::Personnage() {
+    nom = "Inconnu";
+    pointDeVie = 100;
+    mana = 50;
+    experience = 0;
+    niveau = 1;
+    statistique = Statistique(10, 10, 10, 10);
+    inventaire = Inventaire();
+}
+
 Personnage::Personnage(string nom, int pointDeVie, int mana, int experience, int niveau , Statistique stats , Inventaire inventaire) {
     this->nom = nom;
     this->pointDeVie = pointDeVie;

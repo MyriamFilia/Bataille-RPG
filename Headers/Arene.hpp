@@ -1,6 +1,8 @@
 #ifndef ARENE_HPP
 #define ARENE_HPP
 
+#include "../Headers/personnages/Personnage.hpp"
+
 #include <vector>
 
 class Arene {

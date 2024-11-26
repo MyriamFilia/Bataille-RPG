@@ -1,4 +1,5 @@
-#include "Inventaire.hpp"
+#include "../Headers/Inventaire.hpp"
+#include "../Headers/objets/Objet.hpp"
 #include <iostream>
 using namespace std;
 

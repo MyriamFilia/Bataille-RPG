@@ -1,7 +1,7 @@
 #ifndef ARCHER_HPP
 #define ARCHER_HPP
 
-#include "Personnage.hpp"
+#include "../Headers/personnages/Personnage.hpp"
 
 class Archer : public Personnage
 {
