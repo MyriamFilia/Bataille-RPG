@@ -2,12 +2,15 @@
 #define BOUCLIER_HPP
 
 #include "Objet.hpp"
+#include <iostream>
+using namespace std;
 
 class Bouclier : public Objet {
     public:
-        Bouclier();
-        /*virtual ~Bouclier();*/
-        void utiliser(); //en utilisant la defense
+        Bouclier(string nom, string description, int effet, int defense);
+        ~Bouclier();
+
+        void utiliser() override; // Méthode pour utiliser le bouclier (augmente la défense)
 
     private:
         int defense;

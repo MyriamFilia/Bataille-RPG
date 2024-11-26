@@ -7,12 +7,13 @@ class Archer : public Personnage
 {
     public:
         Archer(string nom);
-        void attaquer(Personnage &cible);
-        void tirSpecial(); //qui va consommer plus de fleches capacite speciale
+        void attaquer(Personnage &cible) override;
+        void rechargerFleches(int quantite);
+        void utiliserCapaciteSpeciale(Personnage &cible, int index) override;
+
 
     private:
         int precision;
-        int distance;
         int fleches; //nombre limité de fleches
 };
 

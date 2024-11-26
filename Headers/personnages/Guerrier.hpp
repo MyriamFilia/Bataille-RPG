@@ -6,10 +6,10 @@
 class Guerrier : public Personnage
 {
     public:
-        Guerrier(); 
-        void attaquer(Personnage &cible); //attaque de base
-        void enrage(); //attaque qui va consommé de la rage capacite speciale
-
+        Guerrier(string nom);
+        void attaquer(Personnage &cible) override; //attaque de base
+        void utiliserCapaciteSpeciale(Personnage &cible , int index) override; //capacité spéciale
+        void rechargerRage(int quantite); //recharge de la rage
         
     private:
         int rage; 
