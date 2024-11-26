@@ -1,3 +1,12 @@
 g++ -o programme main.cpp Sources/personnages/*.cpp Sources/objets/*.cpp Sources/*.cpp -Iheaders
 
 ./programme
+
+
+Ce qui reste à faire : 
+- Les personnages Mage et Ogre
+- La gestion des objets et inventaire
+- Correction des combats 
+- La gestion du niveau et expérience 
+- la capacité de rejouer et gagner en experience dans les combats 
+- Autres ( rajouter)
