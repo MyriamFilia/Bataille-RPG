@@ -13,9 +13,11 @@ class Objet {
         int effet;
 
     public:
-        Objet();
         Objet(string nom, string description, int effet);
-        void utiliser();
+        virtual ~Objet();
+        virtual void utiliser();
+        int getEffet() ;
+        string getNom() ;
 };
 
 #endif // OBJET_HPP

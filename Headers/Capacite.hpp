@@ -3,19 +3,26 @@
 
 #include <string>
 #include "Personnage.hpp"
+using namespace std;
+
 
 class Capacite {
     
     public:
-        Capacite(const std::string& nom, int puissance , int cout);
-        void utiliser(Personnage &cible); //en fonction de la statistique
-        void tempsUtilite(); //delai pour recharger une capacité      
+        Capacite(string nom, int puissance , int cout , int tempsRecharge);
+        string getNom();
+        bool estDisponible(); //verifie si la capacité est disponible
+        int utiliser(int &mana); //utiliser la capacité
+        void appliquerEffet(Personnage &cible,  Statistique &stats); // Applique les effets de la capacité sur la cible
+        void recharger(); // Gère le temps de recharge
+        void afficherCapacite(); // Affiche les informations sur la capacité
 
     private:
         std::string nom;
         int puissance; //est ce utile ? 
         int cout;
         int tempsRecharge;
+        int tempsRestant;
 
 
 };

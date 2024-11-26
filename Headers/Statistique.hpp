@@ -6,9 +6,10 @@ class Statistique {
         Statistique();
         Statistique(int force, int intelligence, int agilite, int chance);
         void afficherStatistique();
-        void calculerDegats(); // utilise la force , intelligence , agilité , chance pour calculer retourne un int ou float 
-
-    private:
+        int calculerDegats(); // utilise la force , intelligence , agilité , chance pour calculer retourne un int ou float 
+        float calculerChanceCritique();
+        
+    public:
         int force;
         int intelligence;
         int agilite;

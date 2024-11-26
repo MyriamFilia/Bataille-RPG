@@ -1,16 +1,21 @@
 #ifndef ARME_HPP
 #define ARME_HPP
 
+
 #include "Objet.hpp"
+#include <iostream>
+using namespace std;
+
 
 class Arme : public Objet {
     public:
-        Arme();
-        /*Arme(string nom, string description, int puissance);*/
-        void utiliser(); //en diminuant la durabilite
+        Arme(string nom, string description, int effet, int durabilite);
+        ~Arme();
+
+        void utiliser() override; // Méthode pour utiliser l'arme ( inflige des dégâts en se basant sur l'effet)
 
     private:
-        int durabilite;
+        int durabilite; // Durabilité de l'arme
 };
 
 #endif // ARME_HPP

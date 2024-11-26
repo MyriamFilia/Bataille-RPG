@@ -10,15 +10,16 @@ using namespace std;
 class Inventaire {
 
     private : 
-        vector<Objet> objets;
+        vector<Objet*> objets;
 
     public :
+        Inventaire();
         void ajouterObjet(Objet *objet);
         void retirerObjet(Objet *objet);
         void afficherInventaire();
         void utiliserObjet(Objet *objet);
-        void afficherStatsObjet(Objet *objet); // montre l’effet de l’objet avant utilisation.
-        void equiperObjet(Objet *objet); // pour des objets comme des armes ou des boucliers qui peuvent rester équipés.
+        /*void afficherStatsObjet(Objet *objet); // montre l’effet de l’objet avant utilisation.
+        void equiperObjet(Objet *objet); // pour des objets comme des armes ou des boucliers qui peuvent rester équipés.*/
 
 };
 
