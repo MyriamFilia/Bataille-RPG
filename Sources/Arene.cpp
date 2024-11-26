@@ -6,14 +6,13 @@
 
 using namespace std;
 
-void menuJeu(){
+void menuJeu()
+{
     cout << "Bienvenue dans le jeu RPG Bataille !" << endl;
-    
 }
 
-
-
-void menuCapaciteSpeciale(Personnage &joueur){
+void menuCapaciteSpeciale(Personnage &joueur)
+{
     cout << "Choisissez la capacité spéciale à utiliser : " << endl;
     joueur.listeCapacites();
     int choix;
@@ -21,7 +20,7 @@ void menuCapaciteSpeciale(Personnage &joueur){
     joueur.utiliserCapaciteSpeciale(joueur, choix);
 }
 
-void Arene::combat(Personnage &joueur, Personnage &ennemi)
+void combat(Personnage &joueur, Personnage &ennemi)
 {
 
     while (joueur.estVivant() && ennemi.estVivant())
