@@ -35,6 +35,7 @@ public:
     bool estVivant() ;
     string getNom();
     int getMana();
+    void listeCapacites();
 
     void ajouterCapacite(const Capacite &capacite);
     virtual void utiliserCapaciteSpeciale(Personnage &cible, int index); // Utilisation de capacité

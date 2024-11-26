@@ -2,17 +2,13 @@
 #define ARENE_HPP
 
 #include <vector>
-#include "Guerrier.hpp"
 
 class Arene {
     public:
-        Arene();
-        void commencerCombat();
-        void tourDeCombat();
-        void finDeCombat();
-        
-    private:
-        std::vector<Personnage> personnages;
+        void menuPersonnage();
+        void menuCapaciteSpeciale(Personnage &joueur);
+        void combat(Personnage &joueur, Personnage &ennemi);
+
 };
 
 #endif // ARENE_HPP
