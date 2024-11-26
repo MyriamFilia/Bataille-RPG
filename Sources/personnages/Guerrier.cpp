@@ -1,4 +1,4 @@
-#include "Guerrier.hpp"
+#include "../Headers/personnages/Guerrier.hpp"
 #include <iostream>
 using namespace std;
 

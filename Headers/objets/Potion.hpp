@@ -1,7 +1,7 @@
 #ifndef POTION_HPP
 #define POTION_HPP
 
-#include "Objet.hpp"
+#include "../Headers/objets/Objet.hpp"
 
 class Potion : public Objet {
 public:

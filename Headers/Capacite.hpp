@@ -2,8 +2,9 @@
 #define CAPACITE_HPP
 
 #include <string>
-#include "Personnage.hpp"
+#include "../Headers/Statistique.hpp"
 using namespace std;
+class Personnage;
 
 
 class Capacite {

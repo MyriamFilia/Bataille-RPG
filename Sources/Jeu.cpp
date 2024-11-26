@@ -1,8 +1,8 @@
-#include "Jeu.hpp"
-#include "Arene.hpp"
-#include "Personnage.hpp"
-#include "Guerrier.hpp"
-#include "Archer.hpp"
+#include "../Headers/Jeu.hpp"
+#include "../Headers/Arene.hpp"
+#include "../Headers/personnages/Personnage.hpp"
+#include "../Headers/personnages/Guerrier.hpp"
+#include "../Headers/personnages/Archer.hpp"
 
 #include <iostream>
 #include <cstdlib>

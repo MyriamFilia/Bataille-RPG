@@ -1,4 +1,4 @@
-#include "Arme.hpp"
+#include "../Headers/objets/Arme.hpp"
 #include <iostream>
 using namespace std;
 

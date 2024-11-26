@@ -4,9 +4,9 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "Inventaire.hpp"
-#include "Capacite.hpp"
-#include "Statistique.hpp"
+#include "../Headers/Statistique.hpp"
+#include "../Headers/Inventaire.hpp"
+#include "../Headers/Capacite.hpp"
 
 using namespace std;
 

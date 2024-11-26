@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "Objet.hpp"
+#include "../Headers/objets/Objet.hpp"
 using namespace std; 
 
 class Inventaire {

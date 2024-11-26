@@ -1,4 +1,4 @@
-#include "Jeu.hpp"
+#include "../Headers/Jeu.hpp"
 #include <iostream>
 
 using namespace std;

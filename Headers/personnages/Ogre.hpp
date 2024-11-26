@@ -1,7 +1,7 @@
 #ifndef OGRE_HPP
 #define OGRE_HPP
 
-#include "Personnage.hpp"
+#include "../Headers/personnages/Personnage.hpp"
 
 class Ogre : public Personnage {
     public:
