@@ -1,0 +1,3 @@
+g++ -o programme main.cpp Sources/personnages/*.cpp Sources/objets/*.cpp Sources/*.cpp -Iheaders
+
+./programme

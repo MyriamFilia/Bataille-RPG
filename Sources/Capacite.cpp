@@ -1,4 +1,6 @@
-#include "Capacite.hpp"
+#include "../Headers/Capacite.hpp"
+#include "../Headers/personnages/Personnage.hpp"
+#include "../Headers/Statistique.hpp"
 #include <iostream>
 
 

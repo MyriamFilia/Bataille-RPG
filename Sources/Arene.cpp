@@ -1,19 +1,18 @@
-#include "Arene.hpp"
-#include "Personnage.hpp"
-#include "Guerrier.hpp"
-#include "Archer.hpp"
+#include "../Headers/personnages/Personnage.hpp"
+#include "../Headers/personnages/Guerrier.hpp"
+#include "../Headers/personnages/Archer.hpp"
+#include "../Headers/Arene.hpp"
 #include <iostream>
 
 using namespace std;
 
-void menuJeu(){
+void menuJeu()
+{
     cout << "Bienvenue dans le jeu RPG Bataille !" << endl;
-    
 }
 
-
-
-void menuCapaciteSpeciale(Personnage &joueur){
+void Arene::menuCapaciteSpeciale(Personnage &joueur)
+{
     cout << "Choisissez la capacité spéciale à utiliser : " << endl;
     joueur.listeCapacites();
     int choix;
@@ -26,8 +25,8 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
 
     while (joueur.estVivant() && ennemi.estVivant())
     {
-        joueur.afficherPersonnage();
-        ennemi.afficherPersonnage();
+        /*joueur.afficherPersonnage();
+        ennemi.afficherPersonnage();*/
 
         cout << "\nQue voulez-vous faire ?" << endl;
         cout << "1. Attaquer\n 2. Utiliser capacité spéciale\nChoix : ";

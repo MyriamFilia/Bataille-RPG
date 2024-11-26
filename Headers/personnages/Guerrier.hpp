@@ -1,7 +1,7 @@
 #ifndef GUERRIER_HPP
 #define GUERRIER_HPP
 
-#include "Personnage.hpp"
+#include "../Headers/personnages/Personnage.hpp"
 
 class Guerrier : public Personnage
 {

@@ -1,4 +1,4 @@
-#include "Objet.hpp"
+#include "../Headers/objets/Objet.hpp"
 
 Objet::Objet(string nom, string description, int effet) {
     this->nom = nom;
