@@ -1,5 +1,6 @@
 #include "../Headers/Statistique.hpp"
 #include <iostream>
+#include <time.h>
 
 Statistique::Statistique() {}
 

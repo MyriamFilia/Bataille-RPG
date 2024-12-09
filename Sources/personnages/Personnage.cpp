@@ -39,11 +39,11 @@ void Personnage::afficherPersonnage() {
     statistique.afficherStatistique();
     inventaire.afficherInventaire();
 
-    cout << "Capacités spéciales : " << endl;
+    /*cout << "Capacités spéciales : " << endl;
     for (size_t i = 0; i < capacites.size(); ++i) {
         cout << i + 1 << ". ";
         capacites[i].afficherCapacite();
-    }
+    }*/
 }
 
 // Attaque de base

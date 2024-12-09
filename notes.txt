@@ -75,3 +75,13 @@ Trame du jeu :
 	- Tour d'attaque 1 : random 
 
 Menu choisir type de personnage : Guerrier , Archer , Mage , Ogre
+
+
+Logique pour utiliser un objet : 
+- Pour l'inventaire : si les pv < 50 proposition pour utiliser l'inventaire 
+- Au départ un personnage a un bouclier moins de dégats , potion augmenter la pv
+- Supprimer Arme ne sert à rien 
+
+Logique pour la defense : 
+- a modifier 
+- 
