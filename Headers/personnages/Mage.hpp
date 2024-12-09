@@ -5,9 +5,12 @@
 
 class Mage : public Personnage {
     public:
-        Mage();
+        Mage(string nom);
         void attaquer(Personnage &cible);
-        void lancerSort(); //méthode pour lancer un sort en utilisant de la puissance magique capacite speciale
+        void lancerSort(); 
+        void rechargerPuissanceMagique(int quantite);
+        void utiliserCapaciteSpeciale(Personnage &cible, int index) override;
+        //méthode pour lancer un sort en utilisant de la puissance magique capacite speciale
 
     private:
         int puissanceMagique; 

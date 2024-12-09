@@ -17,7 +17,7 @@ void Arene::menuCapaciteSpeciale(Personnage &joueur)
     joueur.listeCapacites();
     int choix;
     cin >> choix;
-    joueur.utiliserCapaciteSpeciale(joueur, choix);
+    joueur.utiliserCapaciteSpeciale(joueur, choix-1);
 }
 
 void Arene::combat(Personnage &joueur, Personnage &ennemi)
@@ -51,15 +51,16 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
     else
         cout << "Vous avez perdu le combat..." << endl;
 
-    /*cout << "Voulez-vous rejouer ? (y/n) : ";
+    cout << "Voulez-vous rejouer ? (y/n) : ";
     char rejouer;
     cin >> rejouer;
     if (rejouer == 'y' || rejouer == 'Y')
     {
-        combat(joueur, ennemi);
+        cout << "Salam 3leykoum" << endl;
+        combat(joueur, ennemi);// si le joueur gagne on ne réinitialise pas ses points de vie
+        if (joueur.estVivant()){
+            joueur.gagnerExperience(100);
+            joueur.monterNiveau();
+        }
     }
-    else if (joueur.estVivant())
-    {
-        joueur.gagnerExperience(100);
-    }*/
 }
