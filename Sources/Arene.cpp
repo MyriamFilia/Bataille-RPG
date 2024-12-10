@@ -137,7 +137,3 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
 
     
 }
-
-void Arene::rejouer(Personnage &joueur, Personnage &ennemi){
-    
-}

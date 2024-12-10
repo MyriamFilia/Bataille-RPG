@@ -16,6 +16,8 @@ private:
     Arene arene;
 
 public:
+    void menuPersonnage();
+    void rejouer(Personnage &joueur, Personnage &ennemi);
     Jeu() : joueur(nullptr), ennemi(nullptr) {}
     void lancer();
     void modeTournoi();
