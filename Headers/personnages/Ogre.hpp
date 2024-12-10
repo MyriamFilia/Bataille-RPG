@@ -6,7 +6,7 @@
 class Ogre : public Personnage {
     public:
         Ogre();
-        void attaquer(Personnage &cible);
+        int attaquer(Personnage &cible);
         void coupEcrasant(); //consomme la force brute et la resistance capacite speciale
 
     private:

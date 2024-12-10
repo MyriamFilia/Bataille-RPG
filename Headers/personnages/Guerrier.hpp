@@ -7,7 +7,7 @@ class Guerrier : public Personnage
 {
     public:
         Guerrier(string nom);
-        void attaquer(Personnage &cible) override; //attaque de base
+        int attaquer(Personnage &cible) override; //attaque de base
         void utiliserCapaciteSpeciale(Personnage &cible , int index) override; //capacité spéciale
         void rechargerRage(int quantite); //recharge de la rage
         

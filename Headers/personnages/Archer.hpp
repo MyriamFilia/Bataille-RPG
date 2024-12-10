@@ -7,7 +7,7 @@ class Archer : public Personnage
 {
     public:
         Archer(string nom);
-        void attaquer(Personnage &cible) override;
+        int attaquer(Personnage &cible) override;
         void rechargerFleches(int quantite);
         void utiliserCapaciteSpeciale(Personnage &cible, int index) override;
 

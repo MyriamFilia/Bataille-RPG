@@ -15,11 +15,12 @@ Guerrier::Guerrier(string nom) {
     capacites.push_back(Capacite("Enragé", 20, 10 , 4));
 }
 
-void Guerrier::attaquer(Personnage &cible) {
+int Guerrier::attaquer(Personnage &cible) {
     int degats = statistique.calculerDegats();
     cout << nom << " attaque et inflige " << degats << " dégâts !" << endl;
     cible.recevoirDegats(degats);
     rage += 10;
+    return degats;
 }
 
 void Guerrier::rechargerRage(int quantite) {

@@ -48,22 +48,36 @@ void Personnage::afficherPersonnage(std::ostream &out) const {
 }
 
 // Attaque de base
-void Personnage::attaquer(Personnage &cible) {
+int Personnage::attaquer(Personnage &cible) {
     cout << nom << " attaque " << cible.nom << " !" << endl;
     int degats = statistique.calculerDegats();
     cout << "Il inflige " << degats << " dégâts !" << endl;
     cible.recevoirDegats(degats);
+    return degats;
 }
 
 // Recevoir des dégâts
 void Personnage::recevoirDegats(int degats) {
-    cout << nom << " reçoit " << degats << " dégâts !" << endl;
+    if (bouclierActif) {
+        // Si le bouclier est actif, réduire les dégâts de 20%
+        degats = static_cast<int>(degats * 0.8);  // 20% de réduction
+        cout << "Le bouclier a réduit les dégâts à " << degats << " !" << endl;
+    }
     pointDeVie -= degats;
-    if (pointDeVie <= 0) {
-        cout << nom << " est mort !" << endl;
-        pointDeVie = 0;
+    if (pointDeVie < 0) {
+        pointDeVie = 0;  // Assurez-vous que les PV ne descendent pas sous 0
+    }
+    cout << nom << " a maintenant " << pointDeVie << " points de vie." << endl;
+}
+
+void Personnage::utiliserBouclier(int &degats) {
+    if (bouclierActif) {
+        // Réduire les dégâts en fonction du bouclier
+        degats = static_cast<int>(degats * 0.8);  // 20% de réduction des dégâts
+        cout << "Le bouclier réduit les dégâts à " << degats << " !" << endl;
     }
 }
+
 
 // Gagner de l'expérience
 void Personnage::gagnerExperience(int experience) {
@@ -137,3 +151,7 @@ void Personnage::rechargerCapacites() {
         capacite.recharger();
     }
 }
+
+// Utiliser un bouclier pour réduire les dégâts
+
+

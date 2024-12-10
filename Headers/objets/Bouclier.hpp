@@ -1,19 +1,23 @@
 #ifndef BOUCLIER_HPP
 #define BOUCLIER_HPP
 
+#include <string>
 #include "../Headers/objets/Objet.hpp"
-#include <iostream>
+#include "../Headers/personnages/Personnage.hpp"
+
 using namespace std;
 
-class Bouclier : public Objet {
-    public:
-        Bouclier(string nom, string description, int effet, int defense);
-        ~Bouclier();
+class Bouclier : public Objet
+{
+protected:
+    int defense;
 
-        void utiliser() override; // Méthode pour utiliser le bouclier (augmente la défense)
+public:
+    Bouclier(string nom, string description, int effet, int defense);
+    virtual ~Bouclier();
 
-    private:
-        int defense;
+    // Garder la méthode avec les paramètres
+    virtual void utiliser(Personnage &joueur, Personnage &cible); // Ajout des paramètres
 };
 
 #endif // BOUCLIER_HPP

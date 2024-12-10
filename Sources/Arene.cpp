@@ -2,6 +2,7 @@
 #include "../Headers/personnages/Guerrier.hpp"
 #include "../Headers/personnages/Archer.hpp"
 #include "../Headers/Arene.hpp"
+#include "../Headers/Statistique.hpp"
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -62,6 +63,7 @@ int Arene::menuAction()
     cout << "\nQue voulez-vous faire ?" << endl;
     cout << "1. Attaquer" << endl;
     cout << "2. Utiliser une capacité spéciale" << endl;
+    cout << "3. Utiliser un Bouclier" << endl;
     cout << "Choix : ";
 
     int choix;
@@ -94,6 +96,7 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
 {
     while (joueur.estVivant() && ennemi.estVivant())
     {
+<<<<<<< HEAD
         // Affiche les stats des deux personnages avant chaque tour
         cadre(joueur, ennemi);
         // Menu d'action pour le joueur
@@ -107,6 +110,11 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
         case 2:
             menuCapaciteSpeciale(joueur, ennemi);
             break;
+        case 3: {
+                cout << joueur.getNom() << " se prépare à utiliser son bouclier !" << endl;
+                joueur.activerBouclier();  // Active le bouclier pour ce tour
+                break;
+            }
         default:
             cout << "Action invalide. Vous perdez votre tour !" << endl;
         }
@@ -173,14 +181,5 @@ void Arene::rejouer(Personnage &joueur, Personnage &ennemi){
             cout << "Choix invalide. Veuillez entrer 'y' ou 'n'." << endl;
             rejouer(joueur, ennemi); // Relancer la fonction de rejouer
         }
-    }
-    else if (rejouer == 'n' || rejouer == 'N') {
-        cout << "Merci d'avoir joué !" << endl;
-        return;
-    }
-    else {
-        cout << "Choix invalide. Veuillez entrer 'y' ou 'n'." << endl;
-        rejouer(joueur, ennemi); // Relancer la fonction de rejouer
-    }
 
 }

@@ -16,15 +16,17 @@ Archer::Archer(string nom) {
     capacites.push_back(Capacite("Pluie de flèches", 50, 60 , 5));
 }
 
-void Archer::attaquer(Personnage &cible) {
+int Archer::attaquer(Personnage &cible) {
     if (fleches > 0) {
         int degats = statistique.calculerDegats();
         cout << nom << " tire une flèche et inflige " << degats << " dégâts !" << endl;
         cible.recevoirDegats(degats);
         fleches--;
+        return degats;
     } else {
         cout << "Pas de flèches restantes !" << endl;
     }
+    
 }
 
 void Archer::rechargerFleches(int quantite) {
