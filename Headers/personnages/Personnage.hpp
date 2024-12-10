@@ -27,7 +27,7 @@ public:
     Personnage();
     Personnage(string nom, int pointDeVie, int mana, int experience, int niveau , Statistique stats , Inventaire inventaire);
     
-    void afficherPersonnage();
+    void afficherPersonnage(std::ostream &out) const;
     virtual void attaquer(Personnage &cible);
     virtual void recevoirDegats(int degats);
     void gagnerExperience(int experience);

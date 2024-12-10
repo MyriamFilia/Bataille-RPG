@@ -3,52 +3,66 @@
 #include "../Headers/personnages/Personnage.hpp"
 #include "../Headers/personnages/Guerrier.hpp"
 #include "../Headers/personnages/Archer.hpp"
+#include "../Headers/personnages/Mage.hpp"
 
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
 
-void menuPersonnage(){
-    
+void Jeu::menuPersonnage(){
+    cout << "==============================" << endl;
+    cout << "   Sélection du Personnage   " << endl;
+    cout << "==============================" << endl;
+    cout << "1. Guerrier" << endl;
+    cout << "2. Mage" << endl;
+    cout << "3. Archer" << endl;
+    cout << "Choisissez votre personnage (1-3) : ";
 }
 
 void Jeu::lancer() {
-    cout << "Bienvenue dans le jeu RPG Bataille !" << endl;
-    cout << "Choisissez votre personnage:\n1. Guerrier\n2. Mage\n3. Archer\nChoix : ";
+    cout << "==============================" << endl;
+    cout << "   Bienvenue dans RPG Battle   " << endl;
+    cout << "==============================" << endl;
+    cout << "Préparez-vous pour une aventure épique !" << endl;
+
+    menuPersonnage();
     int choixPersonnage;
     cin >> choixPersonnage;
+
+    cout << "Entrez le nom de votre personnage: ";
+    string nomPersonnage;
+    cin >> nomPersonnage;
 
     Personnage* joueur = nullptr;
     switch (choixPersonnage){
         case 1:
-            joueur = new Guerrier("Guerrier");
+            joueur = new Guerrier(nomPersonnage);
             break;
         case 2:
-            //joueur = new Mage("Mage");
+            joueur = new Mage(nomPersonnage);
             break;
         case 3:
-            joueur = new Archer("Archer");
+            joueur = new Archer(nomPersonnage);
             break;
         default:
             cout << "Choix invalide. Vous serez un Guerrier par défaut." << endl;
-            joueur = new Guerrier("Guerrier");
+            joueur = new Guerrier(nomPersonnage);
             break;
     }
 
     Arene arene;
-    
 
-    srand(static_cast<unsigned int>(time(0)));
+
     int choixEnnemi = rand() % 3 + 1;
-
     Personnage* ennemi = nullptr;
+
     switch (choixEnnemi) {
         case 1:
             ennemi = new Guerrier("Ennemi Guerrier");
             break;
         case 2:
-            //ennemi = new Mage("Ennemi Mage");
+            ennemi = new Mage("Ennemi Mage");
             break;
         case 3:
             ennemi = new Archer("Ennemi Archer");

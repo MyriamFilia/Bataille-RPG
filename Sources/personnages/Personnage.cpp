@@ -7,6 +7,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 using namespace std;
 
 
@@ -32,12 +33,12 @@ Personnage::Personnage(string nom, int pointDeVie, int mana, int experience, int
 }
 
 // Affiche les informations du personnage
-void Personnage::afficherPersonnage() {
-    cout << "Nom: " << nom << endl;
-    cout << "PV: " << pointDeVie << ", Mana: " << mana << endl;
-    cout << "Expérience: " << experience << ", Niveau: " << niveau << endl;
-    statistique.afficherStatistique();
-    inventaire.afficherInventaire();
+void Personnage::afficherPersonnage(std::ostream &out) const {
+    out << left << setw(20) << "PV: " + std::to_string(pointDeVie) <<endl;
+    out << left << setw(20) << "Mana: " + std::to_string(mana) << endl;
+    out << left << setw(20) << "Niveau: " + std::to_string(niveau) << endl;
+    statistique.afficherStatistique(out);
+    //inventaire.afficherInventaire();
 
     /*cout << "Capacités spéciales : " << endl;
     for (size_t i = 0; i < capacites.size(); ++i) {
@@ -82,8 +83,8 @@ void Personnage::monterNiveau() {
     statistique.intelligence += 5;
     statistique.agilite += 5;
     statistique.chance += 5;
-    pointDeVie += 10;
-    mana += 5;
+    pointDeVie += 20;
+    mana += 10;
 }
 
 // Vérifier si le personnage est vivant

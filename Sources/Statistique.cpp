@@ -1,6 +1,7 @@
 #include "../Headers/Statistique.hpp"
-#include <iostream>
 #include <time.h>
+#include <iomanip>
+using namespace std;
 
 Statistique::Statistique() {}
 
@@ -12,11 +13,11 @@ Statistique::Statistique(int force, int intelligence, int agilite, int chance) {
     this->chance = rand() % 100 + 1;
 }
 
-void Statistique::afficherStatistique() {
-    std::cout << "Force: " << force << std::endl;
-    std::cout << "Intelligence: " << intelligence << std::endl;
-    std::cout << "Agilite: " << agilite << std::endl;
-    std::cout << "Chance: " << chance << std::endl;
+void Statistique::afficherStatistique(std::ostream &out) const {
+    out << left << setw(20) << "Force: " + std::to_string(force)<< endl;
+    out << left << setw(20) << "Intelligence: " + std::to_string(intelligence) << endl;
+    out << left << setw(20) << "Agilité: " + std::to_string(agilite)<< endl;
+    out << left << setw(20) << "Chance: " + std::to_string(chance) << endl;
 }
 
 int Statistique::calculerDegats() {
