@@ -7,7 +7,7 @@
 class Arene {
     public:
         void menuPersonnage();
-        void menuCapaciteSpeciale(Personnage &joueur);
+        void menuCapaciteSpeciale(Personnage &joueur , Personnage &cible);
         void combat(Personnage &joueur, Personnage &ennemi);
         void cadre(Personnage &joueur , Personnage &cible);
         int menuAction();

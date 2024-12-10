@@ -76,27 +76,12 @@ int Arene::menuAction()
     return choix;
 }
 
-// Fonction pour créer un nouvel ennemi (si nécessaire)
-Personnage Arene::creerNouvelEnnemi() {
-    int typeEnnemi = rand() % 3 + 1; // Choisir un type d'ennemi parmi 3 types (1, 2, 3)
-    
-    switch (typeEnnemi) {
-    case 1:
-        return Archer(Ar);  // Crée un ennemi de type Archer
-    case 2:
-        return Guerrier(); // Crée un ennemi de type Guerrier
-    case 3:
-        return Mage(); // Crée un ennemi de type Mage
-    default:
-        return Guerrier(); // Défaut en cas d'erreur
-    }
-}
+
 // Fonction principale du combat
 void Arene::combat(Personnage &joueur, Personnage &ennemi)
 {
     while (joueur.estVivant() && ennemi.estVivant())
     {
-<<<<<<< HEAD
         // Affiche les stats des deux personnages avant chaque tour
         cadre(joueur, ennemi);
         // Menu d'action pour le joueur
@@ -154,32 +139,5 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
 }
 
 void Arene::rejouer(Personnage &joueur, Personnage &ennemi){
-    // Rejouer ou quitter
-    cout << "\nVoulez-vous rejouer ? (y/n) : ";
-    char rejouer;
-    cin >> rejouer;
-    if (rejouer == 'y' || rejouer == 'Y') {
-        // Réinitialiser les personnages si le joueur a perdu
-        if (!joueur.estVivant()) {
-            joueur.reset(); // Réinitialisation du joueur si perdu
-        }
-
-        // Demander si le joueur veut affronter le même ennemi
-        cout << "\nVoulez-vous affronter le même ennemi ? (y/n) : ";
-        char memeEnnemi;
-        cin >> memeEnnemi;
-        if (memeEnnemi == 'y' || memeEnnemi == 'Y') {
-            ennemi.reset(); // Réinitialiser l'ennemi
-            combat(joueur, ennemi); // Rejouer contre le même ennemi
-        }
-        else if (memeEnnemi == 'n' || memeEnnemi == 'N') {
-            // Créer un nouvel ennemi et commencer un nouveau combat
-            Personnage nouvelEnnemi = creerNouvelEnnemi();
-            combat(joueur, nouvelEnnemi);
-        }
-        else {
-            cout << "Choix invalide. Veuillez entrer 'y' ou 'n'." << endl;
-            rejouer(joueur, ennemi); // Relancer la fonction de rejouer
-        }
-
+    
 }
