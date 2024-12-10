@@ -2,65 +2,77 @@
 #include "../Headers/personnages/Guerrier.hpp"
 #include "../Headers/personnages/Archer.hpp"
 #include "../Headers/Arene.hpp"
+#include "../Headers/Statistique.hpp"
 #include <iostream>
 
 using namespace std;
 
-void menuJeu()
-{
-    cout << "Bienvenue dans le jeu RPG Bataille !" << endl;
-}
-
 void Arene::menuCapaciteSpeciale(Personnage &joueur)
 {
     cout << "Choisissez la capacité spéciale à utiliser : " << endl;
-    joueur.listeCapacites();
+    joueur.listeCapacites();  // Affiche la liste des capacités
     int choix;
     cin >> choix;
-    joueur.utiliserCapaciteSpeciale(joueur, choix-1);
+    joueur.utiliserCapaciteSpeciale(joueur, choix - 1);  // Utilisation de la capacité
 }
 
 void Arene::combat(Personnage &joueur, Personnage &ennemi)
 {
-
     while (joueur.estVivant() && ennemi.estVivant())
     {
-        /*joueur.afficherPersonnage();
-        ennemi.afficherPersonnage();*/
-
         cout << "\nQue voulez-vous faire ?" << endl;
-        cout << "1. Attaquer\n 2. Utiliser capacité spéciale\nChoix : ";
+        cout << "1. Attaquer\n2. Utiliser capacité spéciale\n2. Utiliser bouclier\nChoix : ";
         int choix;
         cin >> choix;
+
         switch (choix)
         {
-        case 1:
-            joueur.attaquer(ennemi);
-            break;
-        case 2:
-            menuCapaciteSpeciale(joueur);
+            case 1:
+                joueur.attaquer(ennemi);  // Joueur attaque l'ennemi
+                break;
+
+            case 2:
+                menuCapaciteSpeciale(joueur);  // Joueur utilise une capacité spéciale
+                break;
+
+            case 3: {
+                cout << joueur.getNom() << " se prépare à utiliser son bouclier !" << endl;
+                joueur.activerBouclier();  // Active le bouclier pour ce tour
+                break;
+            }
+
+            default:
+                cout << "Choix invalide, vous attaquez par défaut." << endl;
+                joueur.attaquer(ennemi);  // Attaque par défaut si l'utilisateur entre un choix invalide
+                break;
         }
 
-        if (ennemi.estVivant())
+
+        if (ennemi.estVivant())  // Si l'ennemi est encore en vie, il riposte
         {
             ennemi.attaquer(joueur);
         }
     }
+
     if (joueur.estVivant())
+    {
         cout << "Vous avez gagné le combat !" << endl;
+        joueur.gagnerExperience(100);  // Le joueur gagne de l'expérience
+        joueur.monterNiveau();         // Le joueur monte de niveau
+    }
     else
+    {
         cout << "Vous avez perdu le combat..." << endl;
+    }
 
     cout << "Voulez-vous rejouer ? (y/n) : ";
     char rejouer;
     cin >> rejouer;
+
     if (rejouer == 'y' || rejouer == 'Y')
     {
         cout << "Salam 3leykoum" << endl;
-        combat(joueur, ennemi);// si le joueur gagne on ne réinitialise pas ses points de vie
-        if (joueur.estVivant()){
-            joueur.gagnerExperience(100);
-            joueur.monterNiveau();
-        }
+        // Réinitialisez les personnages (si nécessaire) et recommencez le combat
+        combat(joueur, ennemi);  // N'oubliez pas de vous assurer que cela ne crée pas de récursion infinie
     }
 }

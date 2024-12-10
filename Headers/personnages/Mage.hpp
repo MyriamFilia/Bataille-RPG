@@ -6,7 +6,7 @@
 class Mage : public Personnage {
     public:
         Mage(string nom);
-        void attaquer(Personnage &cible);
+        int attaquer(Personnage &cible);
         void lancerSort(); 
         void rechargerPuissanceMagique(int quantite);
         void utiliserCapaciteSpeciale(Personnage &cible, int index) override;

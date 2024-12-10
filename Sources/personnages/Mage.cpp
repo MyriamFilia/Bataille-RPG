@@ -15,11 +15,12 @@ Mage::Mage(string nom) {
     capacites.push_back(Capacite("Poison", 20, 10 , 4));
 }
 
-void Mage::attaquer(Personnage &cible) {
+int Mage::attaquer(Personnage &cible) {
     int degats = statistique.calculerDegats();
     cout << nom << " attaque et inflige " << degats << " dégâts !" << endl;
     cible.recevoirDegats(degats);
     puissanceMagique+= 10;
+    return degats;
 }
 
 

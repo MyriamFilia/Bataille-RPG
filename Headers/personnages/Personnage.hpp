@@ -12,33 +12,36 @@ using namespace std;
 
 class Personnage
 {
-
 protected:
     string nom;
     int pointDeVie;
     int mana;
     int experience;
     int niveau;
+    bool bouclierActif;
     Statistique statistique;
     Inventaire inventaire;
     vector<Capacite> capacites;
 
 public:
     Personnage();
-    Personnage(string nom, int pointDeVie, int mana, int experience, int niveau , Statistique stats , Inventaire inventaire);
+    Personnage(string nom, int pointDeVie, int mana, int experience, int niveau, Statistique stats, Inventaire inventaire);
     
     void afficherPersonnage();
-    virtual void attaquer(Personnage &cible);
+    virtual int attaquer(Personnage &cible);
+    void activerBouclier() { bouclierActif = true; }
+    void desactiverBouclier() { bouclierActif = false; }
     virtual void recevoirDegats(int degats);
     void gagnerExperience(int experience);
     void monterNiveau();
-    bool estVivant() ;
+    bool estVivant();
     string getNom();
     int getMana();
     void listeCapacites();
 
     void ajouterCapacite(const Capacite &capacite);
     virtual void utiliserCapaciteSpeciale(Personnage &cible, int index); // Utilisation de capacité
+    virtual void utiliserBouclier(int &degats); // Utilisation de bouclier
     void rechargerCapacites(); // Recharge des capacités
 };
 
