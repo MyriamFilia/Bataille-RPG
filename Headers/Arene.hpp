@@ -5,9 +5,14 @@
 #include <vector>
 
 class Arene {
-public:
-    void menuCapaciteSpeciale(Personnage &joueur);  // Affiche les capacités spéciales du joueur
-    void combat(Personnage &joueur, Personnage &ennemi);  // Lancer le combat entre le joueur et l'ennemi
+    public:
+        void menuPersonnage();
+        void menuCapaciteSpeciale(Personnage &joueur);
+        void combat(Personnage &joueur, Personnage &ennemi);
+        void cadre(Personnage &joueur , Personnage &cible);
+        int menuAction();
+        void rejouer(Personnage &joueur, Personnage &ennemi);
+
 };
 
 #endif // ARENE_HPP

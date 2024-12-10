@@ -27,10 +27,11 @@ public:
     Personnage();
     Personnage(string nom, int pointDeVie, int mana, int experience, int niveau, Statistique stats, Inventaire inventaire);
     
-    void afficherPersonnage();
+    void afficherPersonnage(std::ostream &out) const;
     virtual int attaquer(Personnage &cible);
     void activerBouclier() { bouclierActif = true; }
     void desactiverBouclier() { bouclierActif = false; }
+
     virtual void recevoirDegats(int degats);
     void gagnerExperience(int experience);
     void monterNiveau();
