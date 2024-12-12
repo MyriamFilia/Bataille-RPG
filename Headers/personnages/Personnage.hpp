@@ -5,8 +5,10 @@
 #include <iostream>
 #include <vector>
 #include "../Headers/Statistique.hpp"
+class Inventaire;
 #include "../Headers/Inventaire.hpp"
 #include "../Headers/Capacite.hpp"
+#include "../Headers/objets/Objet.hpp"
 
 using namespace std;
 
@@ -18,31 +20,37 @@ protected:
     int mana;
     int experience;
     int niveau;
-    bool bouclierActif;
     Statistique statistique;
-    Inventaire inventaire;
+    Inventaire *inventaire;
     vector<Capacite> capacites;
 
 public:
     Personnage();
-    Personnage(string nom, int pointDeVie, int mana, int experience, int niveau, Statistique stats, Inventaire inventaire);
+    Personnage(string nom, int pointDeVie, int mana, int experience, int niveau, Statistique stats, Inventaire *inventaire);
     
     void afficherPersonnage(std::ostream &out) const;
     virtual int attaquer(Personnage &cible);
-    void activerBouclier() { bouclierActif = true; }
-    void desactiverBouclier() { bouclierActif = false; }
 
     virtual void recevoirDegats(int degats);
+    
+    
     void gagnerExperience(int experience);
     void monterNiveau();
     bool estVivant();
     string getNom();
-    int getMana();
+    int getPv();
+    Inventaire *getInventaire();
+    
+    void augmenterPV(int pv);
+
     void listeCapacites();
+    void initialliserInventaire();
+    void ramasserObjet(Objet *objet);
+
+    virtual void reset(); // Réinitialisation des statistiques
 
     void ajouterCapacite(const Capacite &capacite);
     virtual void utiliserCapaciteSpeciale(Personnage &cible, int index); // Utilisation de capacité
-    virtual void utiliserBouclier(int &degats); // Utilisation de bouclier
     void rechargerCapacites(); // Recharge des capacités
 };
 

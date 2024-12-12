@@ -12,6 +12,12 @@
 
 using namespace std;
 
+Jeu::Jeu()
+{
+    joueur = nullptr;
+    ennemi = nullptr;
+}
+
 void Jeu::lancer()
 {
     cout << "==============================" << endl;
@@ -79,8 +85,7 @@ Personnage *Jeu::creerEnnemi()
 // Fonction pour générer un personnage pour le tournoi
 Personnage *Jeu::creerPersonnage()
 {
-    cout << "Choisissez votre personnage:\n1. Guerrier\n2. Mage\n3. Archer\nChoix : ";
-
+    menuPersonnage();
     int choixPersonnage;
     cin >> choixPersonnage;
 
@@ -92,33 +97,44 @@ Personnage *Jeu::creerPersonnage()
     switch (choixPersonnage)
     {
     case 1:
-        joueur = new Guerrier("guerrier");
+        joueur = new Guerrier(nomPersonnage + " Guerrier");
         break;
     case 2:
 
-        joueur = new Mage("Mage");
+        joueur = new Mage(nomPersonnage + " Mage");
 
         break;
     case 3:
-        joueur = new Archer("archer");
+        joueur = new Archer(nomPersonnage +" Archer");
         break;
     default:
         cout << "Choix invalide. Vous serez un Guerrier par défaut." << endl;
-        joueur = new Guerrier("guerrier");
+        joueur = new Guerrier(nomPersonnage + "Guerrier");
         break;
     }
 
+    cout << "Personnage créé: " << joueur->getNom() << endl;  // Ajout de débogage pour vérifier le nom
     return joueur;
 }
 
+void Jeu::menuTournoi()
+{
+    cout << "==============================" << endl;
+    cout << "   Tournoi de Personnages   " << endl;
+    cout << "==============================" << endl;
+    cout << "Combien de joueurs vont participer au tournoi ?" << endl;
+    cout << "Votre choix : ";
+    
+    
+}
 void Jeu::modeTournoi()
 {
-    cout << "----Démarrage du tournoi----" << endl;
-    cout << "Combien de joueurs vont participer au tournoi ? ";
+    menuTournoi();
     int nbJoueurs;
     cin >> nbJoueurs;
 
     vector<Personnage *> joueurs;
+
     for (int i = 0; i < nbJoueurs; ++i)
     {
         cout << "Joueur " << i + 1 << ":" << endl;
@@ -127,7 +143,6 @@ void Jeu::modeTournoi()
 
     tournoi(joueurs); // Lancer le tournoi
 }
-
 void Jeu::tournoi(vector<Personnage *> &joueurs)
 {
     // Effectuer des combats jusqu'à ce qu'il ne reste qu'un joueur
@@ -167,31 +182,55 @@ void Jeu::tournoi(vector<Personnage *> &joueurs)
 
 void Jeu::mode1v1()
 {
-    cout << "Choisissez votre personnage:\n1. Guerrier\n2. Mage\n3. Archer\nChoix : ";
-    int choixPersonnage;
-    cin >> choixPersonnage;
-
-    // Création du joueur
-    switch (choixPersonnage)
-    {
-    case 1:
-        joueur = new Guerrier("Guerrier");
-        break;
-    case 2:
-        joueur = new Mage("Mage");
-        break;
-    case 3:
-        joueur = new Archer("Archer");
-        break;
-    default:
-        cout << "Choix invalide. Vous serez un Guerrier par défaut." << endl;
-        joueur = new Guerrier("Guerrier");
-        break;
-    }
+    // Création du personnage du joueur
+    joueur = creerPersonnage();
 
     // Création de l'ennemi
     ennemi = creerEnnemi();
 
     // Combat entre le joueur et l'ennemi
     arene.combat(*joueur, *ennemi);
+
+    //rejouer
+    rejouer(*joueur, *ennemi);
+}
+
+void Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
+{
+    // Rejouer ou quitter
+    cout << "\nVoulez-vous rejouer ? (y/n) : ";
+    char rejouer;
+    cin >> rejouer;
+    if (rejouer == 'y' || rejouer == 'Y') {
+        // Réinitialiser les personnages si le joueur a perdu
+        if (!joueur.estVivant()) {
+            joueur.reset(); // Réinitialisation du joueur si perdu
+        }
+
+        // Demander si le joueur veut affronter le même ennemi
+        cout << "\nVoulez-vous affronter le même ennemi ? (y/n) : ";
+        char memeEnnemi;
+        cin >> memeEnnemi;
+        if (memeEnnemi == 'y' || memeEnnemi == 'Y') {
+            ennemi.reset(); // Réinitialiser l'ennemi
+            arene.combat(joueur, ennemi); // Rejouer contre le même ennemi
+        }
+        else if (memeEnnemi == 'n' || memeEnnemi == 'N') {
+            // Créer un nouvel ennemi et commencer un nouveau combat
+            Personnage* nouvelEnnemi = creerEnnemi();
+            arene.combat(joueur, *nouvelEnnemi);
+        }
+        else {
+            cout << "Choix invalide. Veuillez entrer 'y' ou 'n'." << endl;
+            this->rejouer(joueur, ennemi); // Relancer la fonction de rejouer
+        }
+    }
+    else if (rejouer == 'n' || rejouer == 'N') {
+        cout << "Merci d'avoir joué !" << endl;
+        return;
+    }
+    else {
+        cout << "Choix invalide. Veuillez entrer 'y' ou 'n'." << endl;
+        this->rejouer(joueur, ennemi); // Relancer la fonction de rejouer
+    }
 }

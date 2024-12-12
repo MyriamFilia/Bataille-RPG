@@ -16,14 +16,19 @@ private:
     Arene arene;
 
 public:
+    Jeu();
+
     void menuPersonnage();
-    void rejouer(Personnage &joueur, Personnage &ennemi);
-    Jeu() : joueur(nullptr), ennemi(nullptr) {}
     void lancer();
-    void modeTournoi();
-    void mode1v1();
+    void rejouer(Personnage &joueur, Personnage &ennemi);
+   
+   
     Personnage* creerEnnemi();
     Personnage* creerPersonnage();
+
+    void menuTournoi();
+    void modeTournoi();
+    void mode1v1();
     void tournoi(std::vector<Personnage*>& joueurs);
 };
 

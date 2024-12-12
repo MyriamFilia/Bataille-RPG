@@ -2,6 +2,7 @@
 #define ARCHER_HPP
 
 #include "../Headers/personnages/Personnage.hpp"
+#include "../Headers/objets/Objet.hpp"
 
 class Archer : public Personnage
 {
@@ -10,6 +11,7 @@ class Archer : public Personnage
         int attaquer(Personnage &cible) override;
         void rechargerFleches(int quantite);
         void utiliserCapaciteSpeciale(Personnage &cible, int index) override;
+        void reset() override;
 
 
     private:

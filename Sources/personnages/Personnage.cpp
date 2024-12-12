@@ -1,7 +1,10 @@
+#include "../Headers/personnages/Personnage.hpp"
 #include "../Headers/Statistique.hpp"
 #include "../Headers/Inventaire.hpp"
 #include "../Headers/Capacite.hpp"
-#include "../Headers/personnages/Personnage.hpp"
+#include "../Headers/objets/Objet.hpp"
+#include "../Headers/objets/Potion.hpp"
+#include "../Headers/objets/Bouclier.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -14,15 +17,15 @@ using namespace std;
 // Constructeur
 Personnage::Personnage() {
     nom = "Inconnu";
-    pointDeVie = 100;
+    pointDeVie = 150;
     mana = 50;
     experience = 0;
     niveau = 1;
-    statistique = Statistique(10, 10, 10, 10);
-    inventaire = Inventaire();
+    statistique = Statistique(10, 10, 10);
+    *inventaire = Inventaire();
 }
 
-Personnage::Personnage(string nom, int pointDeVie, int mana, int experience, int niveau , Statistique stats , Inventaire inventaire) {
+Personnage::Personnage(string nom, int pointDeVie, int mana, int experience, int niveau , Statistique stats , Inventaire *inventaire) {
     this->nom = nom;
     this->pointDeVie = pointDeVie;
     this->mana = mana;
@@ -38,13 +41,6 @@ void Personnage::afficherPersonnage(std::ostream &out) const {
     out << left << setw(20) << "Mana: " + std::to_string(mana) << endl;
     out << left << setw(20) << "Niveau: " + std::to_string(niveau) << endl;
     statistique.afficherStatistique(out);
-    //inventaire.afficherInventaire();
-
-    /*cout << "Capacités spéciales : " << endl;
-    for (size_t i = 0; i < capacites.size(); ++i) {
-        cout << i + 1 << ". ";
-        capacites[i].afficherCapacite();
-    }*/
 }
 
 // Attaque de base
@@ -58,26 +54,26 @@ int Personnage::attaquer(Personnage &cible) {
 
 // Recevoir des dégâts
 void Personnage::recevoirDegats(int degats) {
-    if (bouclierActif) {
-        // Si le bouclier est actif, réduire les dégâts de 20%
-        degats = static_cast<int>(degats * 0.8);  // 20% de réduction
-        cout << "Le bouclier a réduit les dégâts à " << degats << " !" << endl;
-    }
+    // Réduction immédiate des points de vie
     pointDeVie -= degats;
     if (pointDeVie < 0) {
         pointDeVie = 0;  // Assurez-vous que les PV ne descendent pas sous 0
     }
-    cout << nom << " a maintenant " << pointDeVie << " points de vie." << endl;
-}
 
-void Personnage::utiliserBouclier(int &degats) {
-    if (bouclierActif) {
-        // Réduire les dégâts en fonction du bouclier
-        degats = static_cast<int>(degats * 0.8);  // 20% de réduction des dégâts
-        cout << "Le bouclier réduit les dégâts à " << degats << " !" << endl;
+    cout << nom << " reçoit " << degats << " dégâts. " << endl;
+
+    // Marque le personnage comme ayant des PV critiques si nécessaire
+    if (pointDeVie > 0 && pointDeVie <= 30) { 
+        cout << "Attention ! Les PV de " << nom << " sont critiques. Vous pourrez votre inventaire." << endl;
     }
 }
 
+// Initialiser l'inventaire
+void Personnage::initialliserInventaire() {
+    inventaire->ajouterObjet(new Potion("Potion de vie", "Restaure 60 points de vie", 60));
+    inventaire->ajouterObjet(new Bouclier("Bouclier", "Réduit les dégats", 20));
+    inventaire->ajouterObjet(new Bouclier("Bouclier magique", "Réduit les dégats magiques", 40));
+}
 
 // Gagner de l'expérience
 void Personnage::gagnerExperience(int experience) {
@@ -98,7 +94,7 @@ void Personnage::monterNiveau() {
     statistique.agilite += 5;
     statistique.chance += 5;
     pointDeVie += 20;
-    mana += 10;
+    mana += 20;
 }
 
 // Vérifier si le personnage est vivant
@@ -111,10 +107,6 @@ string Personnage::getNom() {
     return nom;
 }
 
-// Récupérer le mana du personnage
-int Personnage::getMana() {
-    return mana;
-}
 
 // Afficher la liste des capacités
 void Personnage::listeCapacites() {
@@ -139,7 +131,7 @@ void Personnage::utiliserCapaciteSpeciale(Personnage &cible,int index) {
     Capacite &capacite = capacites[index];
     if (capacite.estDisponible()) {
         capacite.appliquerEffet(cible, statistique);
-        capacite.utiliser(mana);
+        //capacite.utiliser(mana);
     } else {
         cout << "La capacité " << capacite.getNom() << " n'est pas encore disponible !" << endl;
     }
@@ -152,6 +144,29 @@ void Personnage::rechargerCapacites() {
     }
 }
 
-// Utiliser un bouclier pour réduire les dégâts
+// Réinitialiser les statistiques
+void Personnage::reset() {
+    pointDeVie = 150;
+    mana = 50;
+}
 
+// Augmenter les points de vie
+void Personnage::augmenterPV(int pv) {
+    pointDeVie += pv;
+}
 
+// Ramasser un objet
+void Personnage::ramasserObjet(Objet *objet) {
+    inventaire->ajouterObjet(objet);
+    cout << nom << " a ramassé " << objet->getNom() << " !" << endl;
+}
+
+// Récupérer l'inventaire
+Inventaire* Personnage::getInventaire() {
+    return inventaire;
+}
+
+// Récupérer les points de vie
+int Personnage::getPv() {
+    return pointDeVie;
+}

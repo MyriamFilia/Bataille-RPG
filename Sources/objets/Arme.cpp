@@ -3,7 +3,7 @@
 using namespace std;
 
 // Constructeur
-Arme::Arme(string nom, string description, int effet, int durabilite) : Objet(nom, description, effet) {
+Arme::Arme(string nom, string description,int durabilite) : Objet(nom, description) {
     this->durabilite = durabilite;
 }
 
@@ -13,11 +13,11 @@ Arme::~Arme() {
 }
 
 // Méthode pour utiliser l'arme ( inflige des dégâts en se basant sur l'effet)
-void Arme::utiliser() {
+/*void Arme::utiliser() {
     cout << "Vous utilisez " << this->nom << ": " << this->description << " (Effet: " << effet << ").\n";
     durabilite--;
     if (durabilite <= 0) {
         std::cout << "L'arme" << this->nom <<"cassée !" << std::endl;
     }
-}
+}*/
 
