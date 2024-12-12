@@ -10,6 +10,7 @@ class Arene {
         void combat(Personnage &joueur, Personnage &ennemi);
         void cadre(Personnage &joueur , Personnage &cible);
         int menuAction();
+        Objet *randomObjet();
 
 };
 

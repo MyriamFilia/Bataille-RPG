@@ -2,6 +2,7 @@
 #define GUERRIER_HPP
 
 #include "../Headers/personnages/Personnage.hpp"
+#include "../Headers/objets/Objet.hpp"
 
 class Guerrier : public Personnage
 {
@@ -10,6 +11,7 @@ class Guerrier : public Personnage
         int attaquer(Personnage &cible) override; //attaque de base
         void utiliserCapaciteSpeciale(Personnage &cible , int index) override; //capacité spéciale
         void rechargerRage(int quantite); //recharge de la rage
+        void reset() override; //réinitialisation des statistiques
         
     private:
         int rage; 

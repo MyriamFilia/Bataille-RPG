@@ -5,7 +5,7 @@ using namespace std;
 
 Statistique::Statistique() {}
 
-Statistique::Statistique(int force, int intelligence, int agilite, int chance) {
+Statistique::Statistique(int force, int intelligence, int agilite) {
     this->force = force;
     this->intelligence = intelligence;
     this->agilite = agilite;

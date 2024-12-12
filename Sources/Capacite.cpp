@@ -24,19 +24,24 @@ bool Capacite::estDisponible() {
 }
 
 // Méthode pour utiliser la capacité
-int Capacite::utiliser(int &mana) {
+int Capacite::utiliser(int &mana , int ressource) {
     if (mana < cout) {
         std::cout << "Pas assez de mana pour utiliser " << nom << " !" << std::endl;
-        return 0;  // Retourne 0 si la capacité ne peut pas être utilisée
+        return 0;
     }
     if (!estDisponible()) {
         std::cout << nom << " est encore en recharge pendant " << tempsRestant << " tours." << std::endl;
-        return 0;  // Retourne 0 si la capacité est en recharge
+        return 0;  
+    }
+    if (ressource <= 0) {
+        std::cout << "Pas assez de ressources pour utiliser " << nom << " !" << std::endl;
+        return 0;
     }
 
     mana -= cout;  // Déduit le mana nécessaire
     tempsRestant = tempsRecharge;  // Réinitialise le temps de recharge
     std::cout << nom << " utilisé avec succès !" << std::endl;
+
 
     // Retourne la puissance de la capacité
     return puissance;

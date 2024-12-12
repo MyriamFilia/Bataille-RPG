@@ -4,9 +4,13 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "../Headers/personnages/Personnage.hpp"
+class Personnage;
 #include "../Headers/objets/Objet.hpp"
+
 using namespace std; 
 
+class Objet;
 class Inventaire {
 
     private : 
@@ -17,9 +21,8 @@ class Inventaire {
         void ajouterObjet(Objet *objet);
         void retirerObjet(Objet *objet);
         void afficherInventaire();
-        void utiliserObjet(Objet *objet);
-        /*void afficherStatsObjet(Objet *objet); // montre l’effet de l’objet avant utilisation.
-        void equiperObjet(Objet *objet); // pour des objets comme des armes ou des boucliers qui peuvent rester équipés.*/
+        void utiliserObjet(Personnage *joueur,Objet *objet);
+        Objet* getObjet(int index);
 
 };
 

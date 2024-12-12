@@ -2,8 +2,10 @@
 #define BOUCLIER_HPP
 
 #include <string>
+
 #include "../Headers/objets/Objet.hpp"
 #include "../Headers/personnages/Personnage.hpp"
+
 
 using namespace std;
 
@@ -13,8 +15,7 @@ protected:
     int defense;
 
 public:
-    Bouclier(string nom, string description, int effet, int defense);
-    virtual ~Bouclier();
+    Bouclier(string nom, string description, int defense);
 
     // Garder la méthode avec les paramètres
     virtual void utiliser(Personnage &joueur, Personnage &cible); // Ajout des paramètres
