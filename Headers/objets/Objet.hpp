@@ -1,7 +1,7 @@
 #ifndef OBJET_HPP
 #define OBJET_HPP
 
-#include "../Headers/personnages/Personnage.hpp"
+class Personnage;
 #include <string>
 #include <iostream>
 using namespace std; 

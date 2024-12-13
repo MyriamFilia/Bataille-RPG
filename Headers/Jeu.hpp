@@ -6,6 +6,9 @@
 #include "personnages/Guerrier.hpp"
 #include "personnages/Archer.hpp"
 #include "personnages/Mage.hpp"
+#include "objets/Objet.hpp"
+#include "objets/Potion.hpp"
+#include "objets/Bouclier.hpp"
 
 #include <vector>
 

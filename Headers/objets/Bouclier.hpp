@@ -16,9 +16,7 @@ protected:
 
 public:
     Bouclier(string nom, string description, int defense);
-
-    // Garder la méthode avec les paramètres
-    virtual void utiliser(Personnage &joueur, Personnage &cible); // Ajout des paramètres
+    void utiliser(Personnage *joueur) override;
 };
 
 #endif // BOUCLIER_HPP

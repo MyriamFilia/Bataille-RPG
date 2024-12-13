@@ -1,6 +1,7 @@
-#include "../Headers/Inventaire.hpp"  // Inclure Inventaire.hpp
-#include "../Headers/personnages/Personnage.hpp"  // Inclure Personnage.hpp pour utiliser un pointeur vers Personnage
+#include "../Headers/Inventaire.hpp"
 #include "../Headers/objets/Objet.hpp"  
+#include "../Headers/personnages/Personnage.hpp"
+
 
 
 #include <iostream>
@@ -11,18 +12,20 @@ Inventaire::Inventaire() {}
 void Inventaire::ajouterObjet(Objet *objet)
 {
     objets.push_back(objet);
+    cout << objet->getNom() << " a été ajouté à l'inventaire." << endl;
 }
 
 void Inventaire::retirerObjet(Objet *objet)
 {
-    for (size_t i = 0; i < objets.size(); ++i)
-    {
-        if (objets[i] == objet)
-        {
-            objets.erase(objets.begin() + i);
-            break;
+    for (auto it = objets.begin(); it != objets.end(); ++it) {
+        if (*it == objet) {
+            delete *it;
+            objets.erase(it);
+            cout << objet->getNom() << " a été retiré de l'inventaire." << endl;
+            return;
         }
     }
+    cout << "Objet introuvable." << endl;
 }
 
 void Inventaire::afficherInventaire()
@@ -43,21 +46,17 @@ void Inventaire::afficherInventaire()
 
 void Inventaire::utiliserObjet(Personnage *joueur,Objet *objet)
 {
-    for (size_t i = 0; i < objets.size(); ++i)
-    {
-        if (objets[i] == objet)
-        {
-            objets[i]->utiliser(joueur);
-            retirerObjet(objet);
-        }
-    }
+    objet->utiliser(joueur);
+    retirerObjet(objet);
 }
 
 Objet* Inventaire::getObjet(int index)
 {
-    if (index >= 0 && index < objets.size())
-    {
-        return objets[index];
-    }
-    return nullptr;
+    if (index < 0 || index >= static_cast<int>(objets.size())) return nullptr;
+    return objets[index];
+}
+
+int Inventaire::getNbObjets()
+{
+    return objets.size();
 }
