@@ -1,4 +1,5 @@
 #include "../Headers/objets/Potion.hpp"
+#include "../Headers/personnages/Personnage.hpp"
 
 
 #include <iostream>

@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ void Jeu::lancer()
     cout << "1. Mode solo\n2. Mode tournoi\nChoix : ";
     int choixMode;
     cin >> choixMode;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
 
     if (choixMode == 1)
     {
@@ -88,10 +90,12 @@ Personnage *Jeu::creerPersonnage()
     menuPersonnage();
     int choixPersonnage;
     cin >> choixPersonnage;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
 
     cout << "Entrez le nom de votre personnage: ";
     string nomPersonnage;
     cin >> nomPersonnage;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
 
     Personnage *joueur = nullptr;
     switch (choixPersonnage)
@@ -100,12 +104,10 @@ Personnage *Jeu::creerPersonnage()
         joueur = new Guerrier(nomPersonnage + " Guerrier");
         break;
     case 2:
-
         joueur = new Mage(nomPersonnage + " Mage");
-
         break;
     case 3:
-        joueur = new Archer(nomPersonnage +" Archer");
+        joueur = new Archer(nomPersonnage + " Archer");
         break;
     default:
         cout << "Choix invalide. Vous serez un Guerrier par défaut." << endl;
@@ -124,14 +126,14 @@ void Jeu::menuTournoi()
     cout << "==============================" << endl;
     cout << "Combien de joueurs vont participer au tournoi ?" << endl;
     cout << "Votre choix : ";
-    
-    
 }
+
 void Jeu::modeTournoi()
 {
     menuTournoi();
     int nbJoueurs;
     cin >> nbJoueurs;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
 
     vector<Personnage *> joueurs;
 
@@ -143,6 +145,7 @@ void Jeu::modeTournoi()
 
     tournoi(joueurs); // Lancer le tournoi
 }
+
 void Jeu::tournoi(vector<Personnage *> &joueurs)
 {
     // Effectuer des combats jusqu'à ce qu'il ne reste qu'un joueur
@@ -201,6 +204,7 @@ void Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
     cout << "\nVoulez-vous rejouer ? (y/n) : ";
     char rejouer;
     cin >> rejouer;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
     if (rejouer == 'y' || rejouer == 'Y') {
         // Réinitialiser les personnages si le joueur a perdu
         if (!joueur.estVivant()) {
@@ -211,6 +215,7 @@ void Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
         cout << "\nVoulez-vous affronter le même ennemi ? (y/n) : ";
         char memeEnnemi;
         cin >> memeEnnemi;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
         if (memeEnnemi == 'y' || memeEnnemi == 'Y') {
             ennemi.reset(); // Réinitialiser l'ennemi
             arene.combat(joueur, ennemi); // Rejouer contre le même ennemi

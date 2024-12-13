@@ -6,10 +6,11 @@ Archer::Archer(string nom) {
     this->nom = nom;
     pointDeVie = 150;
     mana = 50;
+    defense = 5;
     experience = 0;
     niveau = 0;
     statistique = Statistique(5, 10, 20);
-    *inventaire = Inventaire();
+    inventaire = Inventaire();
     initialliserInventaire();
     fleches = 15;
     capacites.push_back(Capacite("Tir précis", 20, 30 , 2));

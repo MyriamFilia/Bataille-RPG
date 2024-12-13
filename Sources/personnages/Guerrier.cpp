@@ -6,10 +6,11 @@ Guerrier::Guerrier(string nom) {
     this->nom = nom;
     pointDeVie = 150;
     mana = 50;
+    defense = 5;
     experience = 0;
     niveau = 0;
     statistique = Statistique(20, 5, 10);
-    *inventaire = Inventaire();
+    inventaire = Inventaire();
     initialliserInventaire();
     rage = 0;
     capacites.push_back(Capacite("Frappe puissante", 30, 20 , 2));

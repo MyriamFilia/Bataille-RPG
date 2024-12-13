@@ -5,10 +5,12 @@
 #include <iostream>
 #include <vector>
 #include "../Headers/Statistique.hpp"
-class Inventaire;
 #include "../Headers/Inventaire.hpp"
 #include "../Headers/Capacite.hpp"
-#include "../Headers/objets/Objet.hpp"
+#include "../Headers/objets/Potion.hpp"
+#include "../Headers/objets/Bouclier.hpp"
+
+class Objet;
 
 using namespace std;
 
@@ -18,30 +20,34 @@ protected:
     string nom;
     int pointDeVie;
     int mana;
+    int defense;
     int experience;
     int niveau;
     Statistique statistique;
-    Inventaire *inventaire;
+    Inventaire inventaire;
     vector<Capacite> capacites;
 
 public:
     Personnage();
-    Personnage(string nom, int pointDeVie, int mana, int experience, int niveau, Statistique stats, Inventaire *inventaire);
+    Personnage(string nom, int pointDeVie, int mana, int defense, int experience, int niveau, Statistique stats, Inventaire inventaire);
     
     void afficherPersonnage(std::ostream &out) const;
     virtual int attaquer(Personnage &cible);
-
+    virtual int SeDefendre(int degats);
     virtual void recevoirDegats(int degats);
+    virtual void utiliserCapaciteSpeciale(Personnage &cible, int index); // Utilisation de capacité
     
     
     void gagnerExperience(int experience);
     void monterNiveau();
     bool estVivant();
+    
     string getNom();
     int getPv();
-    Inventaire *getInventaire();
+    Inventaire getInventaire();
     
     void augmenterPV(int pv);
+    void augmenterDefense(int defense);
 
     void listeCapacites();
     void initialliserInventaire();
@@ -50,7 +56,6 @@ public:
     virtual void reset(); // Réinitialisation des statistiques
 
     void ajouterCapacite(const Capacite &capacite);
-    virtual void utiliserCapaciteSpeciale(Personnage &cible, int index); // Utilisation de capacité
     void rechargerCapacites(); // Recharge des capacités
 };
 

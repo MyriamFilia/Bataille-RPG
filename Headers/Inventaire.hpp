@@ -1,16 +1,16 @@
 #ifndef INVENTAIRE_HPP
 #define INVENTAIRE_HPP
 
+#include "../Headers/objets/Objet.hpp"
+//#include "../Headers/personnages/Personnage.hpp"
+class Personnage;
 #include <string>
 #include <iostream>
 #include <vector>
-#include "../Headers/personnages/Personnage.hpp"
-class Personnage;
-#include "../Headers/objets/Objet.hpp"
+
 
 using namespace std; 
 
-class Objet;
 class Inventaire {
 
     private : 
@@ -23,6 +23,7 @@ class Inventaire {
         void afficherInventaire();
         void utiliserObjet(Personnage *joueur,Objet *objet);
         Objet* getObjet(int index);
+        int getNbObjets();
 
 };
 

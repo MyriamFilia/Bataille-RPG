@@ -6,10 +6,11 @@ Mage::Mage(string nom) {
     this->nom = nom;
     pointDeVie = 150;
     mana = 50;
+    defense = 5;
     experience = 0;
     niveau = 0;
     statistique = Statistique(5, 20, 10);
-    *inventaire = Inventaire();
+    inventaire = Inventaire();
     initialliserInventaire();
     puissanceMagique = 0;
     capacites.push_back(Capacite("Sortilege", 15, 10 , 2));

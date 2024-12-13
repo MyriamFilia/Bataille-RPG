@@ -11,10 +11,10 @@ Objet::~Objet() {
     cout << "Objet " << nom << " détruit." << endl;
 }
 
-void Objet::utiliser(Personnage *joueur) {
-    cout << "Vous utilisez " << nom << ": " << description << " .\n";
-}
-
 string Objet::getNom() {
     return this->nom;
+}
+
+void Objet::utiliser(Personnage *joueur) {
+    cout << "Objet " << nom << " utilisé." << endl;
 }
