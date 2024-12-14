@@ -7,23 +7,26 @@ Mage::Mage(string nom) {
     pointDeVie = 150;
     mana = 50;
     defense = 5;
+    defenseTemporaire = 0;
     experience = 0;
     niveau = 0;
     statistique = Statistique(5, 20, 10);
     inventaire = Inventaire();
     initialliserInventaire();
     puissanceMagique = 0;
-    capacites.push_back(Capacite("Sortilege", 15, 10 , 2));
-    capacites.push_back(Capacite("Poison", 20, 10 , 4));
+    capacites.push_back(Capacite("Sortilege", 15, 10));
+    capacites.push_back(Capacite("Poison", 20, 10));
 }
 
 int Mage::attaquer(Personnage &cible) {
-    int degats = statistique.calculerDegats();
-    cout << nom << " attaque et inflige " << degats << " dégâts !" << endl;
-    cible.recevoirDegats(degats);
-    puissanceMagique+= 10;
-    mana += 5;
-    return degats;
+    // Appel de la méthode attaquer de la classe parente pour infliger les dégâts
+    Personnage::attaquer(cible);
+    // Effets spécifiques du Mage (augmentation de la puissance magique et du mana)
+    puissanceMagique += 10;  
+    mana += 5;               
+    // Affichage des effets supplémentaires
+    cout << nom << " gagne 10 de puissance magique et " << 5 << " de mana !" << endl;
+    return 0;
 }
 
 

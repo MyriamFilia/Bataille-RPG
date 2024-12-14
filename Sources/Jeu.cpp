@@ -11,6 +11,14 @@
 #include <vector>
 #include <limits>
 
+#define ROUGE      "\033[31m"
+#define VERT       "\033[32m"
+#define JAUNE      "\033[33m"
+#define BLEU       "\033[34m"
+#define BLANC      "\033[37m"
+#define GRIS       "\033[90m"
+#define RESET      "\033[0m"
+
 using namespace std;
 
 Jeu::Jeu()
@@ -21,12 +29,12 @@ Jeu::Jeu()
 
 void Jeu::lancer()
 {
-    cout << "==============================" << endl;
-    cout << "   Bienvenue dans RPG Battle   " << endl;
-    cout << "==============================" << endl;
+    cout << BLEU << "==============================" << RESET << endl;
+    cout << BLEU << "   Bienvenue dans RPG Battle   " << RESET << endl;
+    cout << BLEU << "==============================" << RESET << endl;
     cout << "Préparez-vous pour une aventure épique !" << endl;
 
-    cout << "1. Mode solo\n2. Mode tournoi\nChoix : ";
+    cout << "1. Mode solo\n2. Mode tournoi\n3. Quitter\nChoix : ";
     int choixMode;
     cin >> choixMode;
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
@@ -39,18 +47,22 @@ void Jeu::lancer()
     {
         modeTournoi();
     }
+    else if (choixMode == 3)
+    {
+        cout << "Merci d'avoir joué à RPG Battle. À bientôt !" << endl;
+    }
     else
     {
-        cout << "Choix invalide. Fin du jeu." << endl;
+        cout << ROUGE << "Choix invalide. Fin du jeu." << RESET << endl;
         return;
     }
 }
 
 void Jeu::menuPersonnage()
 {
-    cout << "==============================" << endl;
-    cout << "   Sélection du Personnage   " << endl;
-    cout << "==============================" << endl;
+    cout << BLEU << "==============================" << RESET << endl;
+    cout << BLEU << "   Sélection du Personnage   " << RESET << endl;
+    cout << BLEU << "==============================" << RESET << endl;
     cout << "1. Guerrier" << endl;
     cout << "2. Mage" << endl;
     cout << "3. Archer" << endl;
@@ -69,15 +81,19 @@ Personnage *Jeu::creerEnnemi()
     {
     case 1:
         ennemi = new Guerrier("Ennemi Guerrier");
+        cout << GRIS << "Un " << ROUGE << "Guerrier" << GRIS << " apparaît !" << RESET << endl;
         break;
     case 2:
         ennemi = new Mage("Ennemi Mage");
+        cout << GRIS << "Un " << BLEU << "Mage" << GRIS << " apparaît !" << RESET << endl;
         break;
     case 3:
         ennemi = new Archer("Ennemi Archer");
+        cout << GRIS << "Un " << JAUNE << "Archer" << GRIS << " apparaît !" << RESET << endl;
         break;
     default:
         ennemi = new Guerrier("Ennemi Guerrier");
+        cout << GRIS << "Un " << ROUGE << "Guerrier" << GRIS << " apparaît !" << RESET << endl;
         break;
     }
 
@@ -90,12 +106,12 @@ Personnage *Jeu::creerPersonnage()
     menuPersonnage();
     int choixPersonnage;
     cin >> choixPersonnage;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Entrez le nom de votre personnage: ";
     string nomPersonnage;
     cin >> nomPersonnage;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
 
     Personnage *joueur = nullptr;
     switch (choixPersonnage)
@@ -114,16 +130,14 @@ Personnage *Jeu::creerPersonnage()
         joueur = new Guerrier(nomPersonnage + "Guerrier");
         break;
     }
-
-    cout << "Personnage créé: " << joueur->getNom() << endl;  // Ajout de débogage pour vérifier le nom
     return joueur;
 }
 
 void Jeu::menuTournoi()
 {
-    cout << "==============================" << endl;
-    cout << "   Tournoi de Personnages   " << endl;
-    cout << "==============================" << endl;
+    cout << BLEU << "==============================" << RESET << endl;
+    cout << BLEU << "   Tournoi de Personnages   " << RESET << endl;
+    cout << BLEU << "==============================" << RESET << endl;
     cout << "Combien de joueurs vont participer au tournoi ?" << endl;
     cout << "Votre choix : ";
 }
@@ -133,13 +147,13 @@ void Jeu::modeTournoi()
     menuTournoi();
     int nbJoueurs;
     cin >> nbJoueurs;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     vector<Personnage *> joueurs;
 
     for (int i = 0; i < nbJoueurs; ++i)
     {
-        cout << "Joueur " << i + 1 << ":" << endl;
+        cout << "\nJoueur " << i + 1 << " :\n";
         joueurs.push_back(creerPersonnage()); // Création des joueurs
     }
 
@@ -148,10 +162,13 @@ void Jeu::modeTournoi()
 
 void Jeu::tournoi(vector<Personnage *> &joueurs)
 {
-    // Effectuer des combats jusqu'à ce qu'il ne reste qu'un joueur
+    int manche = 1;
     while (joueurs.size() > 1)
     {
-        cout << "\n-- Début de la manche --\n";
+        cout << BLEU << "\n===== Début de la Manche " << manche << " =====" << RESET << endl;
+        vector<Personnage *> gagnants;
+
+        // Effectuer des combats entre paires de joueurs
         for (size_t i = 0; i < joueurs.size(); i += 2)
         {
             if (i + 1 < joueurs.size())
@@ -162,49 +179,63 @@ void Jeu::tournoi(vector<Personnage *> &joueurs)
                 // Vérifier lequel des deux joueurs est vivant et garder le gagnant
                 if (joueurs[i]->estVivant())
                 {
-                    cout << joueurs[i]->getNom() << " gagne!\n";
-                    joueurs.push_back(joueurs[i]);
+                    cout << VERT << joueurs[i]->getNom() << " gagne cette manche !" << RESET << endl;
+                    gagnants.push_back(joueurs[i]);
                 }
                 else
                 {
-                    cout << joueurs[i + 1]->getNom() << " gagne!\n";
-                    joueurs.push_back(joueurs[i + 1]);
+                    cout << ROUGE << joueurs[i + 1]->getNom() << " gagne cette manche !" << RESET << endl;
+                    gagnants.push_back(joueurs[i + 1]);
                 }
             }
+            else
+            {
+                // Si un joueur reste sans adversaire, il passe à la manche suivante
+                cout << "Le joueur " << joueurs[i]->getNom() << " passe à la prochaine manche sans combat." << endl;
+                gagnants.push_back(joueurs[i]);
+            }
         }
-        // Si un joueur perd, il est éliminé
-        if (joueurs.size() % 2 == 0)
+
+        // Mettre à jour les joueurs restants
+        joueurs = gagnants;
+
+        // Afficher un récapitulatif des gagnants de la manche avec couleur
+        cout << BLEU << "\n===== Récapitulatif des gagnants de la manche " << manche << " =====" << RESET << endl;
+        for (auto& gagnant : gagnants)
         {
-            joueurs.pop_back();
+            cout << VERT << gagnant->getNom() << RESET << endl;
         }
+
+        // Incrémenter le compteur de manches
+        manche++;
     }
 
     // Le dernier joueur restant est le gagnant
-    cout << "\n---- Le gagnant du tournoi est " << joueurs[0]->getNom() << " ----" << endl;
+    cout << "\n===== Le gagnant du tournoi est " << VERT << joueurs[0]->getNom() << RESET << " =====" << endl;
 }
 
 void Jeu::mode1v1()
 {
-    // Création du personnage du joueur
+    bool continuer = true;
     joueur = creerPersonnage();
-
-    // Création de l'ennemi
     ennemi = creerEnnemi();
+    while (continuer) {
+        // Combat entre le joueur et l'ennemi
+        arene.combat(*joueur, *ennemi);
 
-    // Combat entre le joueur et l'ennemi
-    arene.combat(*joueur, *ennemi);
-
-    //rejouer
-    rejouer(*joueur, *ennemi);
+        // Proposer de rejouer
+        continuer = rejouer(*joueur, *ennemi);
+    }
 }
 
-void Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
+bool Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
 {
-    // Rejouer ou quitter
+    // Demander au joueur s'il veut rejouer
     cout << "\nVoulez-vous rejouer ? (y/n) : ";
     char rejouer;
     cin >> rejouer;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     if (rejouer == 'y' || rejouer == 'Y') {
         // Réinitialiser les personnages si le joueur a perdu
         if (!joueur.estVivant()) {
@@ -215,7 +246,8 @@ void Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
         cout << "\nVoulez-vous affronter le même ennemi ? (y/n) : ";
         char memeEnnemi;
         cin >> memeEnnemi;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Effacer le buffer d'entrée
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
         if (memeEnnemi == 'y' || memeEnnemi == 'Y') {
             ennemi.reset(); // Réinitialiser l'ennemi
             arene.combat(joueur, ennemi); // Rejouer contre le même ennemi
@@ -226,16 +258,19 @@ void Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
             arene.combat(joueur, *nouvelEnnemi);
         }
         else {
-            cout << "Choix invalide. Veuillez entrer 'y' ou 'n'." << endl;
-            this->rejouer(joueur, ennemi); // Relancer la fonction de rejouer
+            cout << ROUGE << "Choix invalide. Veuillez entrer 'y' ou 'n'." << RESET << endl;
+            return this->rejouer(joueur, ennemi); // Relancer la fonction de rejouer
         }
     }
     else if (rejouer == 'n' || rejouer == 'N') {
-        cout << "Merci d'avoir joué !" << endl;
-        return;
+        cout << "Retour au menu principal" << endl;
+        lancer(); // Retourner au menu principal
+        return false; // Le jeu se termine
     }
     else {
-        cout << "Choix invalide. Veuillez entrer 'y' ou 'n'." << endl;
-        this->rejouer(joueur, ennemi); // Relancer la fonction de rejouer
+        cout << ROUGE << "Choix invalide. Veuillez entrer 'y' ou 'n'." << RESET << endl;
+        return this->rejouer(joueur, ennemi); // Relancer la fonction de rejouer
     }
+
+    return true; // Si le joueur veut rejouer, on retourne true pour continuer
 }

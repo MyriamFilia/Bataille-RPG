@@ -21,6 +21,7 @@ protected:
     int pointDeVie;
     int mana;
     int defense;
+    int defenseTemporaire = 0;
     int experience;
     int niveau;
     Statistique statistique;
@@ -29,7 +30,7 @@ protected:
 
 public:
     Personnage();
-    Personnage(string nom, int pointDeVie, int mana, int defense, int experience, int niveau, Statistique stats, Inventaire inventaire);
+    Personnage(string nom, int pointDeVie, int mana, int defense, int experience, int niveau, Statistique stats, Inventaire inventaire, int defenseTemporaire);
     
     void afficherPersonnage(std::ostream &out) const;
     virtual int attaquer(Personnage &cible);
@@ -44,10 +45,12 @@ public:
     
     string getNom();
     int getPv();
-    Inventaire getInventaire();
+    vector<Capacite> getCapacites();
+    Inventaire& getInventaire();
     
     void augmenterPV(int pv);
     void augmenterDefense(int defense);
+    void augmenterDefenseTemporaire(int valeur);
 
     void listeCapacites();
     void initialliserInventaire();
@@ -56,7 +59,6 @@ public:
     virtual void reset(); // Réinitialisation des statistiques
 
     void ajouterCapacite(const Capacite &capacite);
-    void rechargerCapacites(); // Recharge des capacités
 };
 
 #endif // PERSONNAGE_HPP

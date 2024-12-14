@@ -23,7 +23,7 @@ public:
 
     void menuPersonnage();
     void lancer();
-    void rejouer(Personnage &joueur, Personnage &ennemi);
+    bool rejouer(Personnage &joueur, Personnage &ennemi);
    
    
     Personnage* creerEnnemi();

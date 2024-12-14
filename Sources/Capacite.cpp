@@ -5,22 +5,15 @@
 
 
 // Constructeur
-Capacite::Capacite(string nom, int puissance, int cout, int tempsRecharge) {
+Capacite::Capacite(string nom, int puissance, int cout) {
     this->nom = nom;
     this->puissance = puissance;
     this->cout = cout;
-    this->tempsRecharge = tempsRecharge;
-    this->tempsRestant = 0;
 }
 
 // Méthode pour obtenir le nom de la capacité
 string Capacite::getNom() {
     return nom;
-}
-
-// Méthode pour vérifier si la capacité est disponible
-bool Capacite::estDisponible() {
-    return tempsRestant == 0;
 }
 
 // Méthode pour utiliser la capacité
@@ -29,19 +22,13 @@ int Capacite::utiliser(int &mana , int ressource) {
         std::cout << "Pas assez de mana pour utiliser " << nom << " !" << std::endl;
         return 0;
     }
-    if (!estDisponible()) {
-        std::cout << nom << " est encore en recharge pendant " << tempsRestant << " tours." << std::endl;
-        return 0;  
-    }
     if (ressource <= 0) {
         std::cout << "Pas assez de ressources pour utiliser " << nom << " !" << std::endl;
         return 0;
     }
 
     mana -= cout;  // Déduit le mana nécessaire
-    tempsRestant = tempsRecharge;  // Réinitialise le temps de recharge
-    std::cout << nom << " utilisé avec succès !" << std::endl;
-
+    //std::cout << nom << " utilisé avec succès !" << std::endl;
 
     // Retourne la puissance de la capacité
     return puissance;
@@ -54,15 +41,5 @@ void Capacite::appliquerEffet(Personnage &cible, Statistique &stats) {
     cible.recevoirDegats(degats);
 }
 
-// Gère le temps de recharge
-void Capacite::recharger() {
-    if (tempsRestant > 0) {
-        --tempsRestant;
-    }
-}
 
-// Affiche les informations sur la capacité
-void Capacite::afficherCapacite() {
-    std::cout << "Capacité : " << nom << " | Puissance : " << puissance
-         << " | Coût : " << cout << " | Recharge : " << tempsRecharge << " tours." << std::endl;
-}
+

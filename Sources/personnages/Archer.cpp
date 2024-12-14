@@ -7,26 +7,32 @@ Archer::Archer(string nom) {
     pointDeVie = 150;
     mana = 50;
     defense = 5;
+    defenseTemporaire = 0;
     experience = 0;
     niveau = 0;
     statistique = Statistique(5, 10, 20);
     inventaire = Inventaire();
     initialliserInventaire();
     fleches = 15;
-    capacites.push_back(Capacite("Tir précis", 20, 30 , 2));
-    capacites.push_back(Capacite("Pluie de flèches", 50, 40 , 5));
+    capacites.push_back(Capacite("Tir précis", 20, 30));
+    capacites.push_back(Capacite("Pluie de flèches", 50, 40));
 }
 
 int Archer::attaquer(Personnage &cible) {
-    int degats = statistique.calculerDegats();
+    // Appel de la méthode attaquer de la classe parente Personnage
+    int degats = Personnage::attaquer(cible); // Utilisation de l'attaque de la classe Personnage
+    // Si l'archer a des flèches, il peut attaquer
     if (fleches > 0) {   
         cout << nom << " tire une flèche et inflige " << degats << " dégâts !" << endl;
+        // L'ennemi reçoit les dégâts
         cible.recevoirDegats(degats);
         mana += 5;
-        fleches--;
+        fleches -= 2;
+        cout << "Il vous reste " << fleches << " flèche(s) après cette attaque." << endl;
     } else {
         cout << "Pas de flèches restantes !" << endl;
-        rechargerFleches(5);
+        rechargerFleches(2);  // Recharge 5 flèches
+        cout << nom << " recharge 5 flèches." << endl;
     }
     return degats;
 }
