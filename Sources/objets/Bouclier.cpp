@@ -10,6 +10,6 @@ Bouclier::Bouclier(string nom, string description, int defense) : Objet(nom, des
 
 // Méthode pour utiliser le bouclier (augmente la défense)
 void Bouclier::utiliser(Personnage *joueur) {
-    cout << "Utilisation du bouclier : " << nom << endl;
-    joueur->augmenterDefense(defense);
+    cout <<  joueur->getNom() << " active un bouclier augmentant temporairement sa défense." << nom << endl;
+    joueur->augmenterDefenseTemporaire(defense);
 }

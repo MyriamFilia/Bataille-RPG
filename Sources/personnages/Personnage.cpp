@@ -26,11 +26,12 @@ Personnage::Personnage() {
     inventaire = Inventaire();
 }
 
-Personnage::Personnage(string nom, int pointDeVie, int mana, int defense, int experience, int niveau , Statistique stats , Inventaire inventaire) {
+Personnage::Personnage(string nom, int pointDeVie, int mana, int defense, int experience, int niveau , Statistique stats , Inventaire inventaire, int defenseTemporaire) {
     this->nom = nom;
     this->pointDeVie = pointDeVie;
     this->mana = mana;
     this->defense = defense;
+    this->defenseTemporaire = defenseTemporaire;
     this->experience = experience;
     this->niveau = niveau;
     this->statistique = stats;
@@ -49,28 +50,26 @@ void Personnage::afficherPersonnage(std::ostream &out) const {
 // Attaque de base
 int Personnage::attaquer(Personnage &cible) {
     cout << nom << " attaque " << cible.nom << " !" << endl;
-
-    // Calculer les dégâts à infliger
     int degats = statistique.calculerDegats();
     cout << "Il inflige " << degats << " dégâts !" << endl;
-
-    // Appeler la défense de la cible pour obtenir les dégâts réduits
     int degatsEffectifs = cible.SeDefendre(degats);
     cout << cible.nom << " subit " << degatsEffectifs << " dégâts après défense." << endl;
-
-    // Appliquer les dégâts à la cible
     cible.recevoirDegats(degatsEffectifs);
-
+    
     return degatsEffectifs;
 }
 
 // Defense de base
 int Personnage::SeDefendre(int degats) {
-    int degatsReduits = degats - static_cast<int>(degats * (defense / 100.0));
-    degatsReduits = max(0, degatsReduits); // Assurez-vous que les dégâts ne deviennent pas négatifs
-    cout << nom << " réduit les dégâts de " << defense << "% !" << endl;
-    //cout << nom << " subit " << degatsReduits << " dégâts après défense." << endl;
-    defense --;
+    int defenseTotale = defense + defenseTemporaire;
+    int degatsReduits = degats - static_cast<int>(degats * (defenseTotale / 100.0));
+    degatsReduits = max(0, degatsReduits); // S'assurer que les dégâts ne deviennent pas négatifs
+    cout << nom << " réduit les dégâts de " << defenseTotale << "% !" << endl;
+
+    // Réinitialiser la défense temporaire après utilisation
+    defenseTemporaire = 0;
+    defense = max(0, defense - 1);
+
     return degatsReduits; // Retourne les dégâts effectivement subis
 }
 
@@ -109,9 +108,9 @@ void Personnage::monterNiveau() {
     statistique.force += 5;
     statistique.intelligence += 5;
     statistique.agilite += 5;
-    statistique.chance += 5;
-    pointDeVie += 20;
-    mana += 20;
+    statistique.chance += 2;
+    pointDeVie += 25;
+    mana += 10;
     defense += 2;
 }
 
@@ -128,6 +127,11 @@ string Personnage::getNom() {
 // Récupérer les points de vie
 int Personnage::getPv() {
     return pointDeVie;
+}
+
+// Récupérer les capacités
+vector<Capacite> Personnage::getCapacites() {
+    return capacites;
 }
 
 
@@ -152,26 +156,17 @@ void Personnage::utiliserCapaciteSpeciale(Personnage &cible,int index) {
     }
 
     Capacite &capacite = capacites[index];
-    if (capacite.estDisponible()) {
-        capacite.appliquerEffet(cible, statistique);
+    capacite.appliquerEffet(cible, statistique);
         //capacite.utiliser(mana);
-    } else {
-        cout << "La capacité " << capacite.getNom() << " n'est pas encore disponible !" << endl;
-    }
 }
 
-// Recharger toutes les capacités
-void Personnage::rechargerCapacites() {
-    for (Capacite &capacite : capacites) {
-        capacite.recharger();
-    }
-}
 
 // Réinitialiser les statistiques
 void Personnage::reset() {
     pointDeVie = 150;
     mana = 50;
     defense = 5;
+    initialliserInventaire();
 }
 
 // Augmenter les points de vie
@@ -191,7 +186,12 @@ void Personnage::ramasserObjet(Objet *objet) {
 }
 
 // Récupérer l'inventaire
-Inventaire Personnage::getInventaire() {
+Inventaire& Personnage::getInventaire() {
     return inventaire;
+}
+
+void Personnage::augmenterDefenseTemporaire(int valeur) {
+    defenseTemporaire += valeur;
+    cout << nom << " voit sa défense temporairement augmentée de " << valeur << " !" << endl;
 }
 

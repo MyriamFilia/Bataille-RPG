@@ -12,7 +12,7 @@ Inventaire::Inventaire() {}
 void Inventaire::ajouterObjet(Objet *objet)
 {
     objets.push_back(objet);
-    cout << objet->getNom() << " a été ajouté à l'inventaire." << endl;
+    //cout << objet->getNom() << " a été ajouté à l'inventaire." << endl;
 }
 
 void Inventaire::retirerObjet(Objet *objet)
@@ -21,11 +21,11 @@ void Inventaire::retirerObjet(Objet *objet)
         if (*it == objet) {
             delete *it;
             objets.erase(it);
-            cout << objet->getNom() << " a été retiré de l'inventaire." << endl;
             return;
         }
     }
     cout << "Objet introuvable." << endl;
+
 }
 
 void Inventaire::afficherInventaire()
