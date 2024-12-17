@@ -25,7 +25,7 @@ int Mage::attaquer(Personnage &cible) {
     puissanceMagique += 10;  
     mana += 5;               
     // Affichage des effets supplémentaires
-    cout << nom << " gagne 10 de puissance magique et " << 5 << " de mana !" << endl;
+    //cout << nom << " gagne 10 de puissance magique et " << 5 << " de mana !" << endl;
     return 0;
 }
 
@@ -58,5 +58,11 @@ void Mage::reset() {
     pointDeVie = 150;
     mana = 50;
     puissanceMagique = 0;
+    defense = 5;
     statistique = Statistique(5, 20, 10);
+    //initialliserInventaire();
+}
+
+int Mage::getRessource() {
+    return puissanceMagique;
 }

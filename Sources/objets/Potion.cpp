@@ -11,5 +11,5 @@ Potion::Potion(string nom, string description, int point) : Objet(nom, descripti
 
 void Potion::utiliser(Personnage *joueur) {
     joueur->augmenterPV(point);
-    cout << "Vous gagnez " << this->point << " PV !" << endl;
+    cout <<joueur->getNom() <<" gagne " << this->point << " PV !" << endl;
 }

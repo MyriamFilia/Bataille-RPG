@@ -12,6 +12,7 @@ class Guerrier : public Personnage
         void utiliserCapaciteSpeciale(Personnage &cible , int index) override; //capacité spéciale
         void rechargerRage(int quantite); //recharge de la rage
         void reset() override; //réinitialisation des statistiques
+        int getRessource() override;
         
     private:
         int rage; 

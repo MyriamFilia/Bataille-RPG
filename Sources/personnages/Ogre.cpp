@@ -1,45 +1,41 @@
-#include "../Headers/personnages/Guerrier.hpp"
+#include "../Headers/personnages/Ogre.hpp"
 #include <iostream>
 using namespace std;
 
-Guerrier::Guerrier(string nom) {
+Ogre::Ogre(string nom) {
     this->nom = nom;
-    pointDeVie = 150;
-    mana = 50;
-    defense = 5;
+    pointDeVie = 200; // Plus de points de vie qu'un Guerrier
+    mana = 30; // Moins de mana
+    defense = 15; // Plus de défense
     defenseTemporaire = 0;
     experience = 0;
     niveau = 0;
-    statistique = Statistique(20, 5, 10);
+    statistique = Statistique(30, 15, 20); // Statistiques plus élevées
     inventaire = Inventaire();
     initialliserInventaire();
     rage = 0;
-    capacites.push_back(Capacite("Frappe puissante", 30, 20));
-    capacites.push_back(Capacite("Enragé", 20, 30));
+    capacites.push_back(Capacite("Coup de masse", 40, 15)); // Capacité différente
+    capacites.push_back(Capacite("Rage de l'Ogre", 25, 25)); // Capacité différente
 }
 
-int Guerrier::attaquer(Personnage &cible) {
-    // Appel de la méthode attaquer du parent (Personnage)
-    Personnage::attaquer(cible);  // Appel à la méthode d'attaque de Personnage
-    
-    rage += 5;
-    mana += 5;
 
-    // Affichage des effets supplémentaires
-    //cout << nom << " gagne 10 de rage et " << 5 << " de mana !" << endl;
+int Ogre::attaquer(Personnage &cible) {
+    Personnage::attaquer(cible);
+    rage += 15; // Plus de rage gagnée par attaque
+    mana += 10;
     return 0;
 }
 
-void Guerrier::rechargerRage(int quantite) {
+void Ogre::rechargerRage(int quantite) {
     this->rage += quantite;
-    cout << this->nom << " recharge " << quantite << " rage !" << endl;
+    cout << this->nom << " recharge " << quantite << " rage avec un rugissement !" << endl;
 }
 
-void Guerrier::utiliserCapaciteSpeciale(Personnage &cible, int index) {
+
+void Ogre::utiliserCapaciteSpeciale(Personnage &cible, int index) {
     if (index < capacites.size()) {
         cout << nom << " utilise " << capacites[index].getNom() << " !" << endl;
-
-        // Vérifier si le Guerrier a assez de rage pour utiliser la capacité
+        // Vérifier si assez de rage pour utiliser la capacité
         if (rage >= 10) {
             int puissanceCapacite = capacites[index].utiliser(mana, rage);
             
@@ -59,15 +55,23 @@ void Guerrier::utiliserCapaciteSpeciale(Personnage &cible, int index) {
     }
 }
 
-void Guerrier::reset() {
-    pointDeVie = 150;
-    mana = 50;
+void Ogre::reset() {
+    pointDeVie = 200;
+    mana = 30;
     rage = 0;
-    defense = 5;
-    statistique = Statistique(20, 5, 10);
-    //initialliserInventaire();
+    defense = 15;
+    statistique = Statistique(30, 15, 20);
+    initialliserInventaire();
 }
 
-int Guerrier::getRessource() {
+int Ogre::getRessource() {
     return rage;
 }
+
+
+
+
+
+
+
+

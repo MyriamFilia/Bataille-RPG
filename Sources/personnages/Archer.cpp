@@ -23,7 +23,7 @@ int Archer::attaquer(Personnage &cible) {
     int degats = Personnage::attaquer(cible); // Utilisation de l'attaque de la classe Personnage
     // Si l'archer a des flèches, il peut attaquer
     if (fleches > 0) {   
-        cout << nom << " tire une flèche et inflige " << degats << " dégâts !" << endl;
+        //cout << nom << " tire une flèche et inflige " << degats << " dégâts !" << endl;
         // L'ennemi reçoit les dégâts
         cible.recevoirDegats(degats);
         mana += 5;
@@ -31,8 +31,8 @@ int Archer::attaquer(Personnage &cible) {
         cout << "Il vous reste " << fleches << " flèche(s) après cette attaque." << endl;
     } else {
         cout << "Pas de flèches restantes !" << endl;
-        rechargerFleches(2);  // Recharge 5 flèches
-        cout << nom << " recharge 5 flèches." << endl;
+        rechargerFleches(2);  // Recharge 2 flèches
+        cout << nom << " recharge 2 flèches." << endl;
     }
     return degats;
 }
@@ -65,7 +65,14 @@ void Archer::reset() {
     pointDeVie = 150;
     mana = 50;
     fleches = 15;
+    defense = 5;
     statistique = Statistique(5, 10, 20);
+    //initialliserInventaire();
+}
+
+//recupere la ressource
+int Archer::getRessource(){
+    return fleches;
 }
 
 

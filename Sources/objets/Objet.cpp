@@ -8,13 +8,17 @@ Objet::Objet(string nom, string description) {
 }
 
 Objet::~Objet() {
-    cout << "Objet " << nom << " détruit." << endl;
+    //cout << "Objet " << nom << " détruit." << endl;
 }
 
 string Objet::getNom() {
     return this->nom;
 }
 
+string Objet::getDescription() {
+    return this->description;
+}
+
 void Objet::utiliser(Personnage *joueur) {
-    cout << "Objet " << nom << " utilisé." << endl;
+    //cout << "Objet " << nom << " utilisé." << endl;
 }

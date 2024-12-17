@@ -12,6 +12,7 @@ class Archer : public Personnage
         void rechargerFleches(int quantite);
         void utiliserCapaciteSpeciale(Personnage &cible, int index) override;
         void reset() override;
+        int getRessource() override;
 
 
     private:

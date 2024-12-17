@@ -4,6 +4,7 @@
 #include "../Headers/personnages/Guerrier.hpp"
 #include "../Headers/personnages/Archer.hpp"
 #include "../Headers/personnages/Mage.hpp"
+#include "../Headers/personnages/Ogre.hpp"
 
 #include <iostream>
 #include <cstdlib>
@@ -66,14 +67,15 @@ void Jeu::menuPersonnage()
     cout << "1. Guerrier" << endl;
     cout << "2. Mage" << endl;
     cout << "3. Archer" << endl;
-    cout << "Choisissez votre personnage (1-3) : ";
+    cout << "4. Ogre" << endl;
+    cout << "Choisissez votre personnage (1-4) : ";
 }
 
 // Fonction pour générer un ennemi
 Personnage *Jeu::creerEnnemi()
 {
     srand(static_cast<unsigned int>(time(0))); // Initialisation du générateur de nombres aléatoires
-    int choixEnnemi = rand() % 3 + 1;          // Génère un nombre entre 1 et 3
+    int choixEnnemi = rand() % 5 + 1;          // Génère un nombre entre 1 et 5
 
     Personnage *ennemi = nullptr;
 
@@ -81,7 +83,7 @@ Personnage *Jeu::creerEnnemi()
     {
     case 1:
         ennemi = new Guerrier("Ennemi Guerrier");
-        cout << GRIS << "Un " << ROUGE << "Guerrier" << GRIS << " apparaît !" << RESET << endl;
+        cout << GRIS << "Un " << VERT << "Guerrier" << GRIS << " apparaît !" << RESET << endl;
         break;
     case 2:
         ennemi = new Mage("Ennemi Mage");
@@ -91,9 +93,13 @@ Personnage *Jeu::creerEnnemi()
         ennemi = new Archer("Ennemi Archer");
         cout << GRIS << "Un " << JAUNE << "Archer" << GRIS << " apparaît !" << RESET << endl;
         break;
+    case 4:
+        ennemi = new Ogre("Ennemi Ogre");
+        cout << GRIS << "Un " << ROUGE << "Ogre" << GRIS << " apparaît !" << RESET << endl;
+        break;
     default:
-        ennemi = new Guerrier("Ennemi Guerrier");
-        cout << GRIS << "Un " << ROUGE << "Guerrier" << GRIS << " apparaît !" << RESET << endl;
+        ennemi = new Ogre("Ennemi Ogre");
+        cout << GRIS << "Un " << ROUGE << "Ogre" << GRIS << " apparaît !" << RESET << endl;
         break;
     }
 
@@ -125,6 +131,9 @@ Personnage *Jeu::creerPersonnage()
     case 3:
         joueur = new Archer(nomPersonnage + " Archer");
         break;
+    case 4:
+        joueur = new Ogre(nomPersonnage + " Ogre");
+        break;
     default:
         cout << "Choix invalide. Vous serez un Guerrier par défaut." << endl;
         joueur = new Guerrier(nomPersonnage + "Guerrier");
@@ -148,6 +157,11 @@ void Jeu::modeTournoi()
     int nbJoueurs;
     cin >> nbJoueurs;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    if (nbJoueurs % 2 != 0) {
+        cout << "Le nombre de joueurs doit être pair. Ajout d'un joueur supplémentaire." << endl;
+        nbJoueurs++;  // Ajouter un joueur supplémentaire pour que ce soit pair
+    }
 
     vector<Personnage *> joueurs;
 
@@ -212,6 +226,10 @@ void Jeu::tournoi(vector<Personnage *> &joueurs)
 
     // Le dernier joueur restant est le gagnant
     cout << "\n===== Le gagnant du tournoi est " << VERT << joueurs[0]->getNom() << RESET << " =====" << endl;
+
+    cout << "Retour au menu principal" << endl;
+    lancer(); // Retourner au menu principal
+
 }
 
 void Jeu::mode1v1()
@@ -230,6 +248,7 @@ void Jeu::mode1v1()
 
 bool Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
 {
+
     // Demander au joueur s'il veut rejouer
     cout << "\nVoulez-vous rejouer ? (y/n) : ";
     char rejouer;
@@ -248,14 +267,13 @@ bool Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
         cin >> memeEnnemi;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
+        // la décision de combat sera faite dans la boucle principale
         if (memeEnnemi == 'y' || memeEnnemi == 'Y') {
-            ennemi.reset(); // Réinitialiser l'ennemi
-            arene.combat(joueur, ennemi); // Rejouer contre le même ennemi
+            ennemi.reset(); // Réinitialiser l'ennemi, mais pas de combat ici
         }
         else if (memeEnnemi == 'n' || memeEnnemi == 'N') {
-            // Créer un nouvel ennemi et commencer un nouveau combat
-            Personnage* nouvelEnnemi = creerEnnemi();
-            arene.combat(joueur, *nouvelEnnemi);
+            // Créer un nouvel ennemi, mais pas de combat ici
+            ennemi = *creerEnnemi(); 
         }
         else {
             cout << ROUGE << "Choix invalide. Veuillez entrer 'y' ou 'n'." << RESET << endl;
@@ -274,3 +292,4 @@ bool Jeu::rejouer(Personnage &joueur, Personnage &ennemi)
 
     return true; // Si le joueur veut rejouer, on retourne true pour continuer
 }
+

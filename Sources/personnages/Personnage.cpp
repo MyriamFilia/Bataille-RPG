@@ -49,11 +49,11 @@ void Personnage::afficherPersonnage(std::ostream &out) const {
 
 // Attaque de base
 int Personnage::attaquer(Personnage &cible) {
-    cout << nom << " attaque " << cible.nom << " !" << endl;
+    cout << nom << " attaque " << cible.nom << " ";
     int degats = statistique.calculerDegats();
-    cout << "Il inflige " << degats << " dégâts !" << endl;
+    cout << "et inflige " << degats << " dégâts ! " << endl;
     int degatsEffectifs = cible.SeDefendre(degats);
-    cout << cible.nom << " subit " << degatsEffectifs << " dégâts après défense." << endl;
+    cout << " et subit " << degatsEffectifs << " dégâts après défense." << endl;
     cible.recevoirDegats(degatsEffectifs);
     
     return degatsEffectifs;
@@ -64,7 +64,7 @@ int Personnage::SeDefendre(int degats) {
     int defenseTotale = defense + defenseTemporaire;
     int degatsReduits = degats - static_cast<int>(degats * (defenseTotale / 100.0));
     degatsReduits = max(0, degatsReduits); // S'assurer que les dégâts ne deviennent pas négatifs
-    cout << nom << " réduit les dégâts de " << defenseTotale << "% !" << endl;
+    cout << nom << " réduit les dégâts de " << defenseTotale << "% ";
 
     // Réinitialiser la défense temporaire après utilisation
     defenseTemporaire = 0;
@@ -80,8 +80,8 @@ void Personnage::recevoirDegats(int degats) {
     pointDeVie = max(0, pointDeVie); // Assurez-vous que les PV ne descendent pas sous 0
 
     // Alerte si les PV deviennent critiques
-    if (pointDeVie > 0 && pointDeVie <= 30) {
-        cout << "Attention ! Les PV de " << nom << " sont critiques. Consultez votre inventaire !" << endl;
+    if (pointDeVie > 0 && pointDeVie <= 40) {
+        cout << "Attention ! Les PV de " << nom << " sont critiques." << endl;
     }
 }
 
@@ -93,7 +93,7 @@ void Personnage::initialliserInventaire() {
 
 // Gagner de l'expérience
 void Personnage::gagnerExperience(int experience) {
-    cout << nom << " gagne " << experience << " points d'expérience !" << endl;
+    cout << nom << " gagne " << experience << " points d'expérience !";
     this->experience += experience;
     if (this->experience >= 100) {
         monterNiveau();
@@ -102,7 +102,7 @@ void Personnage::gagnerExperience(int experience) {
 
 // Monter de niveau
 void Personnage::monterNiveau() {
-    cout << nom << " monte de niveau !" << endl;
+    cout << nom << " passe au niveau " << niveau << endl;
     niveau++;
     experience = 0;
     statistique.force += 5;
@@ -127,6 +127,16 @@ string Personnage::getNom() {
 // Récupérer les points de vie
 int Personnage::getPv() {
     return pointDeVie;
+}
+
+// Récupérer les points de mana
+int Personnage::getMana() {
+    return mana;
+}
+
+// Récupérer les ressources
+int Personnage::getRessource() {
+    return 0;
 }
 
 // Récupérer les capacités
@@ -166,7 +176,7 @@ void Personnage::reset() {
     pointDeVie = 150;
     mana = 50;
     defense = 5;
-    initialliserInventaire();
+    //initialliserInventaire();
 }
 
 // Augmenter les points de vie
@@ -182,7 +192,7 @@ void Personnage::augmenterDefense(int defense) {
 // Ramasser un objet
 void Personnage::ramasserObjet(Objet *objet) {
     inventaire.ajouterObjet(objet);
-    cout << nom << " a ramassé " << objet->getNom() << " !" << endl;
+    //cout << nom << " a ramassé " << objet->getNom() << " !" << endl;
 }
 
 // Récupérer l'inventaire

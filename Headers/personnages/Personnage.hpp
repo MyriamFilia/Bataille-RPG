@@ -45,6 +45,8 @@ public:
     
     string getNom();
     int getPv();
+    virtual int getRessource();
+    int getMana();
     vector<Capacite> getCapacites();
     Inventaire& getInventaire();
     

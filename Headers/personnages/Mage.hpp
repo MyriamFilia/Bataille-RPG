@@ -12,6 +12,7 @@ class Mage : public Personnage {
         void utiliserCapaciteSpeciale(Personnage &cible, int index) override;
         //méthode pour lancer un sort en utilisant de la puissance magique capacite speciale
         void reset() override; //réinitialisation des statistiques
+        int getRessource() override;
 
     private:
         int puissanceMagique; 

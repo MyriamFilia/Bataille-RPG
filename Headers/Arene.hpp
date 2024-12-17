@@ -16,6 +16,7 @@ class Arene {
         void cadre(Personnage &joueur , Personnage &cible);
         int menuAction();
         Objet *randomObjet();
+        void ramasserObjet(Personnage &joueur);
 
 };
 

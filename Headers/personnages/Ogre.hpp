@@ -2,16 +2,19 @@
 #define OGRE_HPP
 
 #include "../Headers/personnages/Personnage.hpp"
-
+#include "../Headers/objets/Objet.hpp"
 class Ogre : public Personnage {
     public:
-        Ogre();
-        int attaquer(Personnage &cible);
-        void coupEcrasant(); //consomme la force brute et la resistance capacite speciale
-
+       public:
+        Ogre(string nom);
+        int attaquer(Personnage &cible) override; //attaque de base
+        void utiliserCapaciteSpeciale(Personnage &cible , int index) override; //capacité spéciale
+        void rechargerRage(int quantite); //recharge de la rage
+        void reset() override; //réinitialisation des statistiques
+        int getRessource() override;
+        
     private:
-        int forceBrute;
-        int resistance;
+        int rage; 
     
 };
 

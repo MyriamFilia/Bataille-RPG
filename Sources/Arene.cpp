@@ -140,7 +140,7 @@ bool Arene::utiliserObjetEnnemi(Personnage &ennemi)
 
     if (nbObjets > 0) {
         // 1. Vérification des potions (priorité la plus haute si les PV sont faibles)
-        if (ennemi.getPv() <= 30) {
+        if (ennemi.getPv() <= 40) {
             for (size_t i = 0; i < nbObjets; ++i) {
                 Objet* objet = ennemi.getInventaire().getObjet(i);
                 if (objet != nullptr && dynamic_cast<Potion*>(objet)) {
@@ -151,7 +151,7 @@ bool Arene::utiliserObjetEnnemi(Personnage &ennemi)
             }
         }
 
-        // 2. Vérification des boucliers (si PV sont au-dessus de 30 et que l'ennemi n'a pas utilisé de potion)
+        // 2. Vérification des boucliers (si PV sont au-dessus de 40 et que l'ennemi n'a pas utilisé de potion)
         for (size_t i = 0; i < nbObjets; ++i) {
             Objet* objet = ennemi.getInventaire().getObjet(i);
             if (objet != nullptr && dynamic_cast<Bouclier*>(objet)) {
@@ -170,37 +170,38 @@ bool Arene::utiliserObjetEnnemi(Personnage &ennemi)
 
 void Arene::choisirActionEnnemi(Personnage &joueur, Personnage &ennemi)
 {
-    int actionEnnemi = rand() % 3 + 1; // Choisit une action aléatoire entre 1 et 3
+    if (!ennemi.estVivant()) return;
 
-    switch (actionEnnemi)
-    {
-    case 1: // Attaque
-        cout << "L'ennemi attaque !" << endl;
-        ennemi.attaquer(joueur);
-        break;
+    //std::cout << "\nL'ennemi prépare son action..." << std::endl;
 
-    case 2: // Utilisation d'une capacité spéciale
-        cout << "L'ennemi utilise une capacité spéciale !" << endl;
-        ennemi.utiliserCapaciteSpeciale(joueur, rand() % 2); // Utilise une capacité spéciale aléatoire
-        break;
+    // Étape 1 : Priorité à la survie avec des objets si PV faibles
+    if (ennemi.getPv() <= 70) {
+        if (utiliserObjetEnnemi(ennemi))
+        ennemi.attaquer(joueur); 
+        return;
+    }
 
-    case 3: // Utilisation d'un objet
-        cout << "L'ennemi utilise un objet de son inventaire !" << endl;
-        if (ennemi.getInventaire().getNbObjets() > 0) {
-            size_t indexObjet = rand() % ennemi.getInventaire().getNbObjets();
-            Objet* objet = ennemi.getInventaire().getObjet(indexObjet);
-            if (objet != nullptr) {
-                ennemi.getInventaire().utiliserObjet(&ennemi, objet);
-                //cadre(joueur, ennemi); // Affiche l'état après l'utilisation de l'objet
+    // Étape 2 : Tentative d'utilisation d'une capacité spéciale
+    if (!ennemi.getCapacites().empty()) {
+        // Parcourir les capacités avec leur index
+        auto capacites = ennemi.getCapacites();
+        for (size_t index = 0; index < capacites.size(); ++index) {
+            auto &capacite = capacites[index];
+            auto mana = ennemi.getMana();
+            auto ressource = ennemi.getRessource();
+            int result = capacite.utiliser(mana, ressource);
+            if (result > 0) { // Succès de l'utilisation
+                std::cout << BLEU << "L'ennemi utilise " << capacite.getNom() << " !" << RESET << std::endl;
+                int degats = result; // Puissance de la capacité
+                ennemi.utiliserCapaciteSpeciale(joueur, index); // Utiliser la capacité par index
+                return;
             }
         }
-        break;
-
-    default:
-        cout << "L'ennemi a choisi une action invalide et attaque quand même !" << endl;
-        ennemi.attaquer(joueur);
-        break;
     }
+
+    // Étape 3 : Attaque normale si aucune capacité ou objet n'est disponible
+    std::cout << BLEU << "L'ennemi attaque par défaut !" << RESET << std::endl;
+    ennemi.attaquer(joueur);
 }
 // Fonction principale du combat
 void Arene::combat(Personnage &joueur, Personnage &ennemi)
@@ -214,13 +215,17 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
         if (ennemi.estVivant()) {
             tourEnnemi(joueur, ennemi);
         }
+
     }
 
-    // Résultat du combat
     if (joueur.estVivant())
     {
         cout << "\n" << VERT << "Félicitations ! Vous avez vaincu l'ennemi !" << RESET << endl;
         joueur.gagnerExperience(100);
+
+        // Offrir un objet comme récompense après le combat
+        cout << MAGENTA << "En fouillant le terrain, vous trouvez quelque chose..." << RESET << endl;
+        ramasserObjet(joueur);
     }
     else
     {
@@ -231,7 +236,7 @@ void Arene::combat(Personnage &joueur, Personnage &ennemi)
 // Fonction pour le tour du joueur
 void Arene::tourJoueur(Personnage &joueur, Personnage &ennemi)
 {
-   cadre(joueur, ennemi); // Afficher les stats au début du tour
+    cadre(joueur, ennemi); // Afficher les stats au début du tour
 
     bool tourTermine = false;
 
@@ -250,6 +255,7 @@ void Arene::tourJoueur(Personnage &joueur, Personnage &ennemi)
             break;
         case 3:
             utiliserObjetInventaire(joueur, ennemi);
+            joueur.attaquer(ennemi);
             tourTermine = true; // Fin du tour après utilisation d'un objet
             break;
         default:
@@ -261,66 +267,29 @@ void Arene::tourJoueur(Personnage &joueur, Personnage &ennemi)
             tourTermine = true;
         }
     }
+
+    // Chance que le joueur trouve un objet
+        if (rand() % 100 < 10) { // 15% de chance de trouver un objet
+            ramasserObjet(joueur);
+        }
 }
 
 // Fonction pour gérer le tour de l'ennemi
 void Arene::tourEnnemi(Personnage &joueur, Personnage &ennemi)
 {
-    if (ennemi.estVivant()) {
+    if (!ennemi.estVivant()) return;
 
-        bool actionEffectuee = false;
+    //cadre(joueur, ennemi); // Afficher les états des personnages avant l'action
+    std::cout << "\nL'ennemi commence son tour..." << std::endl;
 
-        // Stratégie pour l'utilisation des objets si les PV sont critiques
-        if (ennemi.getPv() > 0 && ennemi.getPv() <= 30) {
-            actionEffectuee = utiliserObjetEnnemi(ennemi);
-        }
+    // L'ennemi exécute son action en suivant une logique déterminée
+    choisirActionEnnemi(joueur, ennemi);
 
-        // Si aucun objet n'a été utilisé ou si les PV ne sont pas critiques
-        if (!actionEffectuee && ennemi.estVivant()) {
-            cout << "\nL'ennemi prépare son action..." << endl;
-            int actionEnnemi = rand() % 3 + 1; // Action aléatoire entre 1 et 3
-
-            switch (actionEnnemi)
-            {
-            case 1: // Attaque
-                cout << BLEU << "L'ennemi attaque !" << RESET << endl;
-                ennemi.attaquer(joueur);
-                actionEffectuee = true;
-                break;
-
-            case 2: // Utilisation d'une capacité spéciale
-                if (!ennemi.getCapacites().empty()) {
-                    cout << BLEU << "L'ennemi utilise une capacité spéciale !" << RESET << endl;
-                    size_t choixCapacite = rand() % ennemi.getCapacites().size();
-                    ennemi.utiliserCapaciteSpeciale(joueur, choixCapacite);
-                    actionEffectuee = true;
-                } else {
-                    cout << ROUGE << "L'ennemi n'a pas de capacités spéciales disponibles." << RESET << endl;
-                }
-                break;
-
-            case 3: // Utilisation d'un objet
-                cout << BLEU << "L'ennemi tente d'utiliser un objet de son inventaire !" << RESET << endl;
-                actionEffectuee = utiliserObjetEnnemi(ennemi); // Retourne true si un objet a été utilisé
-                if (!actionEffectuee) {
-                    cout << ROUGE << "L'ennemi n'a pas pu utiliser d'objet et attaque par défaut !" << RESET << endl;
-                    ennemi.attaquer(joueur);
-                    actionEffectuee = true;
-                }
-                break;
-
-            default:
-                cout << ROUGE << "L'ennemi hésite et attaque par défaut !" << RESET << endl;
-                ennemi.attaquer(joueur);
-                actionEffectuee = true;
-                break;
-            }
-        }
-
-        // Ne pas faire perdre de tour à l'ennemi s'il a utilisé un objet.
-        if (!actionEffectuee) {
-            cout << ROUGE << "L'ennemi n'a pas pu effectuer d'action et perd son tour." << RESET << endl;
-        }
+    // Chance de trouver un objet à la fin de son tour
+    if (rand() % 100 < 10) { // Par exemple, 10% de chance de trouver un objet
+        Objet *objetTrouve = randomObjet();
+        ennemi.getInventaire().ajouterObjet(objetTrouve);
+        std::cout << BLEU << "L'ennemi trouve un objet : " << objetTrouve->getNom() << " !" << RESET << std::endl;
     }
 }
 
@@ -341,4 +310,26 @@ Objet *Arene::randomObjet()
     default:
         return new Bouclier("Bouclier de protection", "Réduit les dégâts reçus de 35%.", 15);
     }
+}
+
+void Arene::ramasserObjet(Personnage &joueur) {
+    Objet *nouvelObjet = randomObjet(); // Génère un objet aléatoire
+
+    cout << VERT << "Vous avez trouvé un objet : " << RESET << nouvelObjet->getNom() << " - " 
+         << nouvelObjet->getDescription() << endl;
+
+    cout << JAUNE << "Souhaitez-vous ramasser cet objet ? (1 = Oui, 0 = Non) : " << RESET;
+    int choix;
+    cin >> choix;
+
+    if (choix == 1) {
+        joueur.getInventaire().ajouterObjet(nouvelObjet);
+        cout << VERT << "L'objet a été ajouté à votre inventaire." << RESET << endl;
+    } else {
+        cout << ROUGE << "Vous avez choisi de ne pas ramasser l'objet." << RESET << endl;
+        delete nouvelObjet; // Libérer la mémoire si l'objet n'est pas ramassé
+    }
+
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }

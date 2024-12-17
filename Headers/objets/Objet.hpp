@@ -17,6 +17,7 @@ class Objet {
         virtual ~Objet();
         virtual void utiliser(Personnage *joueur);
         string getNom() ;
+        string getDescription();
 };
 
 #endif // OBJET_HPP

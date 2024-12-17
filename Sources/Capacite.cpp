@@ -19,19 +19,18 @@ string Capacite::getNom() {
 // Méthode pour utiliser la capacité
 int Capacite::utiliser(int &mana , int ressource) {
     if (mana < cout) {
-        std::cout << "Pas assez de mana pour utiliser " << nom << " !" << std::endl;
-        return 0;
+        //std::cout << "Pas assez de mana pour utiliser " << nom << " !" << std::endl;
+        return -1; // Signal d'échec à cause du mana
     }
     if (ressource <= 0) {
-        std::cout << "Pas assez de ressources pour utiliser " << nom << " !" << std::endl;
-        return 0;
+        //std::cout << "Pas assez de ressources pour utiliser " << nom << " !" << std::endl;
+        return -2; // Signal d'échec à cause des ressources
     }
 
     mana -= cout;  // Déduit le mana nécessaire
     //std::cout << nom << " utilisé avec succès !" << std::endl;
 
-    // Retourne la puissance de la capacité
-    return puissance;
+    return puissance; // Retourne la puissance en cas de succès
 }
 
 // Applique les effets de la capacité en fonction des statistiques du personnage

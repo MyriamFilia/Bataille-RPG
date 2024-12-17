@@ -16,7 +16,7 @@ Statistique::Statistique(int force, int intelligence, int agilite) {
 void Statistique::afficherStatistique(std::ostream &out) const {
     out << left << setw(20) << "Force: " + std::to_string(force)<< endl;
     out << left << setw(20) << "Intelligence: " + std::to_string(intelligence) << endl;
-    out << left << setw(20) << "Agilité: " + std::to_string(agilite)<< endl;
+    out << left << setw(20) << "Agilité : " + std::to_string(agilite)<< endl;
     out << left << setw(20) << "Chance: " + std::to_string(chance) << endl;
 }
 
